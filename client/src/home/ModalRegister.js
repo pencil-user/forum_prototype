@@ -37,7 +37,7 @@ function FormRegister({handleClose})
     {
         console.log('login data', data)
 
-        if(data.password != data.username)
+        if(data.password != data.confirm)
         {
             setError("username",
             {
