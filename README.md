@@ -18,14 +18,16 @@
 
 ------------------------
 
--Admin username is "admin" and password is "admin123"
+- Admin username is "admin" and password is "admin123"
 
--Forum uses markdown rules for formatting posts
+- Server is deliberately slowed down to showcase chaching
 
--only admin can lock and pin threads. Only admin can delete and edit posts and threads not his own
+- Forum uses markdown rules for formatting posts
 
--It is possible to register, but admin needs to approve you so you may post.
+- only admin can lock and pin threads. Only admin can delete and edit posts and threads not his own
 
--search only looks for titles at the moment
+- It is possible to register, but admin needs to approve you so you may post.
+
+- search only looks for titles at the moment
 
 Dušan Benašić dbenasic@zoho.com
