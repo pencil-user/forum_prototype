@@ -1,11 +1,11 @@
 "use strict"
 
 const express = require('express')
-const k = require('./database.js')
+const k = require('../database/database.js')
 var Crypto = require("crypto-js/");
 
 
-const auth = require('./auth.js')
+const auth = require('../middleware/auth.js')
 const router = express.Router();
 
 router.post('/' ,

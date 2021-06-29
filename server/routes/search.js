@@ -1,7 +1,7 @@
 "use strict"
 
 const express = require('express')
-const k = require('./database.js')
+const k = require('../database/database.js')
 
 const router = express.Router();
 

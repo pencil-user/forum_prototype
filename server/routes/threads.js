@@ -1,8 +1,8 @@
 "use strict"
 
 const express = require('express')
-const k = require('./database.js')
-const auth = require('./auth.js')
+const k = require('../database/database.js')
+const auth = require('../middleware/auth.js')
 
 const router = express.Router();
 

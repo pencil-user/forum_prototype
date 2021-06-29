@@ -3,7 +3,7 @@
 const jwt = require('jsonwebtoken')
 
 const express = require('express')
-const k = require('./database.js')
+const k = require('../database/database.js')
 var Crypto = require("crypto-js/");
 const privateKey = "privateKey11223344";
 
