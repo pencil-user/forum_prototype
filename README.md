@@ -1,6 +1,6 @@
 # Installation instructions:
 
-**server:**
+**backend:**
 
 1. use forum_proj_dusan.sql file to create a MySQL database with test data 
 
@@ -10,7 +10,7 @@
 
 4 run with "node ."
 
-**client:**
+**frontend:**
 
 1. go to client folder and install necessary packages with "npm install" command
 
