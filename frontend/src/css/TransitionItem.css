@@ -1,0 +1,55 @@
+  .TransitionItem1-enter {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  .TransitionItem1-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 500ms, transform 500ms;
+  }
+  .TransitionItem1-exit {
+    opacity: 1;
+  }
+  .TransitionItem1-exit-active {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 500ms, transform 500ms;
+  }
+
+
+.TransitionItem2-enter,
+.TransitionItem2-appear {
+  /*We give the list the initial dimension of the list button*/
+  max-height: 5px;
+  margin: 0px;
+  padding:0px;
+  color: transparent;
+  background-color: #5a564c;
+}
+/* This is where we can add the transition*/
+.TransitionItem2-enter-active,
+.TransitionItem2-appear-active {
+  max-height: 100px;
+  margin: 0px;
+  padding:0px;
+  background-color: #9e8949;
+  transition: all 500ms;
+}
+
+/* This fires as soon as the this.state.showList is false */
+.TransitionItem2-exit {
+  max-height: 100px;
+  margin: 0px;
+  padding:0px;
+  background-color: #9e8949;
+}
+/* fires as element leaves the DOM*/
+.TransitionItem2-exit-active {
+  max-height: 5px;
+  margin: 0px;
+  padding:0px;
+  color: transparent;
+  background-color: #5a564c;
+  transition: all 500ms;
+}
+
