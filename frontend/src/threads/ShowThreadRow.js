@@ -91,6 +91,12 @@ function ShowThreadRow({thread, showModalUpdate})
 
     }
 
+    const threadContent = <>
+        {!!thread.pinned && <span className="badge bg-primary text-light">pinned</span>}
+        {!!thread.locked && <span className="badge bg-info text-light">locked</span>}  
+        {thread.title} 
+    </>
+
     return (
         <tr >
             <td>{thread.id}</td>
@@ -98,11 +104,11 @@ function ShowThreadRow({thread, showModalUpdate})
                 <div className="d-flex justify-content-between">
                     <div>
  
-                        <Link to={"thread/"+thread.id+'/1'}>
-                            {!!thread.pinned && <span className="badge bg-primary text-light">pinned</span>}
-                            {!!thread.locked && <span className="badge bg-info text-light">locked</span>}  
-                            {thread.title} 
-                        </Link>
+                        {!!status ? <>{threadContent}</> 
+
+                        : <Link to={"thread/"+thread.id+'/1'}>
+                        {threadContent} 
+                    </Link>}
                      
                     </div>
                     <div>

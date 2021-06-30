@@ -2,6 +2,8 @@
 
 const express = require('express')
 const k = require('../database/database.js')
+const V = require('../validator/validator.js')
+
 
 const auth = require('../middleware/auth.js')
 const router = express.Router();
@@ -45,6 +47,10 @@ router.get('/',
 )
 
 router.post('/', auth(0) ,
+    V.body({
+        post_body: V.string().required(),
+        thread_id: V.number().required()
+        }),
     async (req,res) =>{
 
         let insertion = req.body
@@ -63,6 +69,10 @@ router.post('/', auth(0) ,
 
 
 router.patch('/:id',
+    V.body({
+        post_body: V.string().required(),
+        thread_id: V.number()
+        }),
     async (req,res) =>{
         let id = req.params.id
         let result = await k('posts').update(req.body).where('id', id)

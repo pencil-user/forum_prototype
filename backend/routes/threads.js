@@ -2,6 +2,8 @@
 
 const express = require('express')
 const k = require('../database/database.js')
+const V = require('../validator/validator.js')
+
 const auth = require('../middleware/auth.js')
 
 const router = express.Router();
@@ -24,6 +26,12 @@ router.get('/:id',
 )
 
 router.post('/', auth(0),
+    V.body({
+        title: V.string().required(),
+        thread_body: V.string().required(),
+        pinned: V.number(),
+        locked: V.number()
+        }),
     async (req,res) =>{
 
         let insertion = req.body
@@ -39,6 +47,12 @@ router.post('/', auth(0),
 )
 
 router.patch('/:id',
+    V.body({
+        title: V.string(),
+        thread_body: V.string(),
+        pinned: V.number(),
+        locked: V.number()
+        }),
     async (req,res) =>{
         let ids = await k('threads').update(req.body).where('id', req.params.id)
         res.json({id: ids[0]})

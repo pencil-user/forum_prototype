@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const express = require('express')
 const k = require('../database/database.js')
+const V = require('../validator/validator.js')
 var Crypto = require("crypto-js/");
 const privateKey = "privateKey11223344";
 
@@ -11,6 +12,10 @@ const router = express.Router();
 
 
 router.post('/',
+    V.body({
+        username: V.string().required(),
+        password: V.string().required()
+        }),
     async (req,res) =>{
 
         let passwordHash = Crypto.SHA256(req.body.password).toString()

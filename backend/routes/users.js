@@ -2,6 +2,8 @@
 
 const express = require('express')
 const k = require('../database/database.js')
+const V = require('../validator/validator.js')
+
 var Crypto = require("crypto-js/");
 
 
@@ -9,6 +11,12 @@ const auth = require('../middleware/auth.js')
 const router = express.Router();
 
 router.post('/' ,
+    V.body({
+        username: V.string().required(),
+        password: V.string().required(),
+        email: V.email()
+
+        }),
     async (req,res) =>{
 
         let username = req.body.username
@@ -43,6 +51,7 @@ router.post('/' ,
 )
 
 router.get('/', auth(2) ,
+
     async (req,res) =>{
 
         let result
