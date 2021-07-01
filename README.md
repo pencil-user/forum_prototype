@@ -4,7 +4,7 @@
 
 1. use forum_proj_dusan.sql file to create a MySQL database with test data 
 
-2. go to server folder and install necessary packages with "npm install" command
+2. go to backend folder and install necessary packages with "npm install" command
 
 3. configure server parameters in config/default.json to connect to database
 
@@ -12,7 +12,7 @@
 
 **frontend:**
 
-1. go to client folder and install necessary packages with "npm install" command
+1. go to frontend folder and install necessary packages with "npm install" command
 
 2. run with "npm start"
 
