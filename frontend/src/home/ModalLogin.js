@@ -60,8 +60,11 @@ function FormLogin({handleClose})
             Username: <br/>
                 <input type="text" {...register('username')}/>
                 <br/>
+            {errors.password && <div class="alert alert-danger" role="alert">{errors.password.message}</div>}
             Password: <br/>    
                 <input type="password" {...register('password')}/>
+                <br/>
+            Try 'admin', 'admin123' or 'SomeGuy', 'SomeGuy123'
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

@@ -37,9 +37,9 @@ function FormRegister({handleClose})
     {
         console.log('login data', data)
 
-        if(data.password != data.confirm)
+        if(data.password !== data.confirm)
         {
-            setError("username",
+            setError("password",
             {
                 type:"manual",
                 message:"passwords don't match"
@@ -70,9 +70,11 @@ function FormRegister({handleClose})
             {errors.username && <div class="alert alert-danger" role="alert">{errors.username.message}</div>}
             Username: <br/>
                 <input type="text" {...register('username')} required minlength={5}/><br/>
+            {errors.email && <div class="alert alert-danger" role="alert">{errors.email.message}</div>}
             Email: <br/>    
                 <input type="email" {...register('email')} required/>                
                 <br/>
+            {errors.password && <div class="alert alert-danger" role="alert">{errors.password.message}</div>}
             Password: <br/>    
                 <input type="password" {...register('password')} required minlength={6}/><br/>
             Confirm: <br/>

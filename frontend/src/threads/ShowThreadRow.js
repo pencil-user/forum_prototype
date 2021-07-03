@@ -9,6 +9,8 @@ import {AddMessage} from '../MessageService/MessageService.js'
 
 import ButtonWithSpin from '../shared/ButtonWithSpin.js'
 
+import ShowThreadCell from './ShowThreadCell'
+
 import axios from 'axios'
 
 async function deleteThread({...data})
@@ -91,25 +93,13 @@ function ShowThreadRow({thread, showModalUpdate})
 
     }
 
-    const threadContent = <>
-        {!!thread.pinned && <span className="badge bg-primary text-light">pinned</span>}
-        {!!thread.locked && <span className="badge bg-info text-light">locked</span>}  
-        {thread.title} 
-    </>
-
     return (
         <tr >
             <td>{thread.id}</td>
             <td>
                 <div className="d-flex justify-content-between">
                     <div>
- 
-                        {!!status ? <>{threadContent}</> 
-
-                        : <Link to={"thread/"+thread.id+'/1'}>
-                        {threadContent} 
-                    </Link>}
-                     
+                        <ShowThreadCell thread={thread} disabled={status}/>
                     </div>
                     <div>
                         { (User.level >= 2) &&
@@ -118,14 +108,14 @@ function ShowThreadRow({thread, showModalUpdate})
                                     className="btn-primary ml-1 mr-1" 
                                     onClick={clickLock}
                                     disabled={deleteMutation.isLoading || status}
-                                    spinning={status == 'toggleLock'} 
+                                    spinning={status === 'toggleLock'} 
                                     label={thread.locked ? "Unlock":"Lock"} 
                                 />                            
                                 <ButtonWithSpin 
                                     className="btn-info ml-1 mr-1" 
                                     onClick={clickPin}
                                     disabled={deleteMutation.isLoading || status}
-                                    spinning={status == 'togglePin'}
+                                    spinning={status === 'togglePin'}
                                     label={thread.pinned ? "Unpin":"Pin"} 
                                 />
 

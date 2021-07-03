@@ -55,6 +55,18 @@ router.post('/', auth(0) ,
 
         let insertion = req.body
 
+        // verify thread exists and is not locked
+
+        let threads = await k('threads').select("*").where('id', req.body.thread_id)
+        
+        if(!('id' in threads[0]) || threads[0].locked ==1)
+        {
+            res.status(401).send({error:'access denied'})
+            return;             
+        }
+
+        //
+
         if(req._user.id && req._user.id>0)
             insertion= {...req.body, created_by_id:req._user.id}
         else
@@ -68,21 +80,54 @@ router.post('/', auth(0) ,
 )
 
 
-router.patch('/:id',
+router.patch('/:id', auth(1),
     V.body({
         post_body: V.string().required(),
         thread_id: V.number()
         }),
     async (req,res) =>{
         let id = req.params.id
-        let result = await k('posts').update(req.body).where('id', id)
+
+        // if we want to change thread where the post is in, we must be admin
+
+        if('thread_id' in req.body && req.user.level<2)
+        {
+            res.status(401).send({error:'access denied'})
+            return;             
+        }
+
+        if(req._user.level<2 ) // admin can alter any post, ordinary users can only alter their own
+        {
+            let posts = await k('posts').select('id', 'created_by_id').where('id', id)
+
+            if(!('id' in posts[0]) || posts[0].created_by_id !== req._user.id)
+            {
+                res.status(401).send({error:'access denied'})
+                return;                
+            }
+        }
+
+        let new_id = await k('posts').update(req.body).where('id', id)
+        let result = await k('posts').select('*').where('id', new_id)
         res.json(result)
     }
 )
 
-router.delete('/:id',
+router.delete('/:id', auth(1),
     async (req,res) =>{
         let id = req.params.id
+
+        if(req._user.level<2 ) // admin can delete any post, ordinary users can only delete their own
+        {
+            let posts = await k('posts').select('created_by_id').where('id', id)
+
+            if(posts[0].created_by_id !== req._user.id)
+            {
+                res.status(401).send({error:'access denied'})
+                return;                
+            }
+        }
+
         let result = await k('posts').del().where('id', id)
         res.json(result)
 

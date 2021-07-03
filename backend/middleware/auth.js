@@ -3,8 +3,6 @@ const express = require("express")
 const k = require('../database/database.js')
 const privateKey = "privateKey11223344";
 
-const router = express.Router();
-
 async function getUserById(id)
 {
     let result = await k('users').select("*").where({'id' : id})
@@ -26,17 +24,17 @@ function auth(minimumLevel=0)
                 if(user.level< minimumLevel)
                 {
                     res.status(401).send({error:'access denied'})
-                    return null
+                    return;
                 }
 
                 req._user = user              
                 next()
-                return null
+                return;
             }
             catch (ex)
             {
                 res.status(400).send({error:'invalid token'})
-                return null
+                return;
             }        
         }
 
