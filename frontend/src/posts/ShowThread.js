@@ -52,11 +52,18 @@ function ShowThread()
     if(isError)
         return <div>There's an error</div>
 
-    return <>
-        <h2>{data.title} #{data.id}</h2>
+    return (
+    <>
+        <h2>
+            {data.title} #{data.id}
+            <span style={{'fontSize': '15px', 'verticalAlign':'text-top'}}>
+                {!!data.pinned && <span className="badge bg-primary text-light">pinned</span>}
+                {!!data.locked && <span className="badge bg-info text-light">locked</span>}
+            </span>            
+        </h2>
         <div><ReactMarkdown children={data.thread_body} /></div>
         <ListPosts thread={data} />
-        </>
+    </>)
 }
 
 function ListPosts({thread})

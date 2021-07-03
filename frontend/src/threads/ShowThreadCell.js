@@ -8,6 +8,7 @@ function ShowThreadCell({thread, disabled})
         {!!thread.pinned && <span className="badge bg-primary text-light">pinned</span>}
         {!!thread.locked && <span className="badge bg-info text-light">locked</span>}  
         {thread.title} 
+
     </>
 
 
