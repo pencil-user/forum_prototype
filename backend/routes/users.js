@@ -14,9 +14,9 @@ router.post('/' ,
     V.body({
         username: V.string().required(),
         password: V.string().required(),
-        email: V.email()
+        email: V.email(),
 
-        }),
+    }),
     async (req,res) =>{
 
         let username = req.body.username
@@ -30,7 +30,7 @@ router.post('/' ,
         if(ids1.length>0)
         {
             res.status(400 )
-            res.send({error:'There is already such email'})
+            res.send({field:'email', error:'There is already such email.'})
             return;
         }
 
@@ -40,7 +40,7 @@ router.post('/' ,
         if(ids2.length>0)
         {
             res.status(400 )
-            res.send({error:'There is already such username'})
+            res.send({field:'username', error:'There is already such username.'})
             return;
         }
 
@@ -51,7 +51,6 @@ router.post('/' ,
 )
 
 router.get('/', auth(2) ,
-
     async (req,res) =>{
 
         let result
@@ -71,6 +70,13 @@ router.get('/', auth(2) ,
 )
 
 router.patch('/:id', auth(2) ,
+    V.body({
+        username: V.string(),
+        password: V.string(),
+        email: V.email(),
+        level: V.number(),
+        approved: V.number()
+    }), 
     async (req,res) =>{
         console.log(req.body)
         let ids = await k('users').update(req.body).where('id', req.params.id)

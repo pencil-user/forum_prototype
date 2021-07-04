@@ -56,9 +56,9 @@ function FormRegister({handleClose})
         }
         catch(error)
         {
-            setError("username", {
+            setError(error?.response?.data?.field, {
                 type: "manual",
-                message: error.response.data.error
+               message: error?.response?.data?.error
               })
         }
         setIsSending(false)
@@ -67,15 +67,15 @@ function FormRegister({handleClose})
     return (
     <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
-            {errors.username && <div class="alert alert-danger" role="alert">{errors.username.message}</div>}
             Username: <br/>
+            {errors.username && <div style={{color:'red'}}>{errors.username.message}</div>}
                 <input type="text" {...register('username')} required minlength={5}/><br/>
-            {errors.email && <div class="alert alert-danger" role="alert">{errors.email.message}</div>}
-            Email: <br/>    
+            Email: <br/> 
+            {errors.email && <div style={{color:'red'}}>{errors.email.message}</div>}
                 <input type="email" {...register('email')} required/>                
                 <br/>
-            {errors.password && <div class="alert alert-danger" role="alert">{errors.password.message}</div>}
-            Password: <br/>    
+            Password: <br/>
+                {errors.password && <div style={{color:'red'}}>{errors.password.message}</div>}
                 <input type="password" {...register('password')} required minlength={6}/><br/>
             Confirm: <br/>
                 <input type="password" {...register('confirm')} required minlength={6}/>

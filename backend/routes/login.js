@@ -19,17 +19,33 @@ router.post('/',
     async (req,res) =>{
 
         let passwordHash = Crypto.SHA256(req.body.password).toString()
-        let users = await k('users').select("*").where({'username' : req.body.username, 'passwordhash': passwordHash, approved:1})
+        let users = await k('users').select("*").where({'username' : req.body.username/*, 'passwordhash': passwordHash, approved:1*/})
         if(users[0])
         {
             let user = users[0]
+
+            if(passwordHash !== user.passwordhash)
+            {
+                res.status(401)
+                res.send({field:'password', error:'Wrong password.'})
+                return;
+            }
+
+            if(user.approved !=1)
+            {
+                res.status(401)
+                res.send({field:'username', error:'User not yet approved.'}) 
+                return;              
+            }
+
             const token = jwt.sign({_id:user.id}, privateKey)
             res.send({...user, token:token})
         }
         else
         {
             res.status(401)
-            res.send({error:'wrong login'})
+            res.send({field:'username', error:'No such user.'})
+            
         }
     }
 )

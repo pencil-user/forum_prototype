@@ -36,6 +36,7 @@ function FormLogin({handleClose})
     async function onSubmit(data)
     {
         console.log('login data', data)
+
         setIsSending(true)
         try
         {
@@ -45,9 +46,10 @@ function FormLogin({handleClose})
         }
         catch(error)
         {
-            setError("username", {
+            console.log('error in error' , error.response.data)
+            setError(error.response.data?.field, {
                 type: "manual",
-                message: "Bad username or password"
+               message: error.response.data?.error
               })
         }
         setIsSending(false)
@@ -56,13 +58,13 @@ function FormLogin({handleClose})
     return (
     <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
-            {errors.username && <div class="alert alert-danger" role="alert">{errors.username.message}</div>}
+            {errors.username && <div style={{color:'red'}}>{errors.username.message}</div>}
             Username: <br/>
-                <input type="text" {...register('username')}/>
+                <input type="text" {...register('username')} minlength={5} required/>
                 <br/>
-            {errors.password && <div class="alert alert-danger" role="alert">{errors.password.message}</div>}
+            {errors.password && <div style={{color:'red'}}>{errors.password.message}</div>}
             Password: <br/>    
-                <input type="password" {...register('password')}/>
+                <input type="password" {...register('password')} minlength={6} required/>
                 <br/>
             Try 'admin', 'admin123' or 'SomeGuy', 'SomeGuy123'
         </Modal.Body>
