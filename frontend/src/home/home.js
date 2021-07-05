@@ -1,12 +1,4 @@
-import React, { useState, useContext } from 'react'
-import {Container, Row, Table} from 'react-bootstrap'
-
-import {LinkContainer} from 'react-router-bootstrap'
-import { Link } from "react-router-dom"
-
-
-import { QueryClientProvider, QueryClient } from "react-query"
-
+import React from 'react'
 
 import { useQuery } from "react-query";
 import axios from 'axios'
@@ -26,7 +18,7 @@ async function getThreads()
 
 function Home()
 {
-    const { data, error, isLoading, isError } = useQuery("threads", getThreads);
+    const { data, isLoading, isError } = useQuery("threads", getThreads);
 
     if(isLoading)
         return <div className="spinner-border" role="status">

@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.post('/',
     V.body({
-        username: V.string().required(),
-        password: V.string().required()
+        username: V.string(5).required(),
+        password: V.string(6).required()
         }),
     async (req,res) =>{
 

@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.post('/' ,
     V.body({
-        username: V.string().required(),
-        password: V.string().required(),
+        username: V.string(5).required(),
+        password: V.string(6).required(),
         email: V.email(),
 
     }),
@@ -71,8 +71,8 @@ router.get('/', auth(2) ,
 
 router.patch('/:id', auth(2) ,
     V.body({
-        username: V.string(),
-        password: V.string(),
+        username: V.string(5),
+        password: V.string(6),
         email: V.email(),
         level: V.number(),
         approved: V.number()

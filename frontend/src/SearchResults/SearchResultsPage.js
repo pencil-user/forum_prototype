@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 
 import { Link, useParams } from 'react-router-dom';
 
 import { useQuery } from "react-query";
 import axios from 'axios'
 
-import ReactMarkdown from 'react-markdown'
 
 async function getSearchResults({queryKey})
 {
@@ -22,14 +21,13 @@ function SearchResults()
 
     const { data, error, isLoading, isError } = useQuery(["searchResults" , { query }], getSearchResults);
 
-    let title =  <h2>Results for query {query}</h2>
+    let title =  <h2>Results for <span style={{color:'green'}}>{query}</span></h2>
 
     if(isLoading)
         return <>{title} loading</>
 
     if(isError)
         return  <>{title} error</>
-
 
     return <>
         {title}
@@ -38,9 +36,6 @@ function SearchResults()
             </div>)
         }
     </>
-
-
-
 
 }
 
