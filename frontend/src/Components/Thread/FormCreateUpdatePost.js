@@ -6,7 +6,10 @@ import { useQuery, useQueryClient, useMutation } from "react-query";
 
 import { useForm } from "react-hook-form";
 
-import ButtonWithSpin from '../shared/ButtonWithSpin.js'
+import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
+
+import '../../css/Markdown.css'
+
 
 import axios from 'axios'
 

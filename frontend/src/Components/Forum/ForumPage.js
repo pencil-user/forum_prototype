@@ -3,7 +3,7 @@ import React from 'react'
 import { useQuery } from "react-query";
 import axios from 'axios'
 
-import ListThreads from "../threads/ListThreads.js"
+import ListThreads from "./ListThreads.js"
 
 //import 'bootstrap/dist/css/bootstrap.min.css';
 

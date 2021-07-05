@@ -9,14 +9,14 @@ import ModalCreatePost from './ModalCreatePost.js'
 import ModalUpdatePost from './ModalUpdatePost.js'
 
 import ShowPost from './ShowPost.js'
-import useModal from '../hooks/useModal.js'
+import useModal from '../../hooks/useModal.js'
 
 
 import ReactMarkdown from 'react-markdown'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 
-import '../css/TransitionItem.css'
+import '../../css/TransitionItem.css'
 
 async function getSingleThread({queryKey})
 {

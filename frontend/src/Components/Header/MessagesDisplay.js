@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
-import {MessageStore, AddMessage} from '../MessageService/MessageService.js'
+import {MessageStore, AddMessage} from '../../MessagesService/MessageService.js'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
-import '../css/TransitionItem.css'
+import '../../css/TransitionItem.css'
 
 function MessagesDisplay()
 {

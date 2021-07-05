@@ -2,10 +2,10 @@ import React, { useState, useContext } from 'react'
 import { useQueryClient, useMutation } from "react-query";
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
-import {UserStore} from '../UserService/UserService.js'
-import UserHighlight from '../shared/UserHighlight.js'
+import {UserStore} from '../../UserService/UserService.js'
+import UserHighlight from '../Shared/UserHighlight.js'
 
-import ButtonWithSpin from '../shared/ButtonWithSpin.js'
+import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
 
 async function deletePost({...data})

@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react'
 
 import { useQueryClient, useMutation } from "react-query";
 import { Link, useParams } from 'react-router-dom';
-import UserHighlight from '../shared/UserHighlight.js'
-import {UserStore} from '../UserService/UserService.js'
+import UserHighlight from '../Shared/UserHighlight.js'
+import {UserStore} from '../../UserService/UserService.js'
 
-import {AddMessage} from '../MessageService/MessageService.js'
+import {AddMessage} from '../../MessagesService/MessageService.js'
 
-import ButtonWithSpin from '../shared/ButtonWithSpin.js'
+import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
 import ShowThreadCell from './ShowThreadCell'
 

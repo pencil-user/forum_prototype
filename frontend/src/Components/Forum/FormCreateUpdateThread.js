@@ -7,9 +7,9 @@ import { useQueryClient, useMutation } from "react-query";
 
 import { useForm } from "react-hook-form";
 
-import {AddMessage} from '../MessageService/MessageService.js'
+import {AddMessage} from '../../MessagesService/MessageService.js'
 
-import ButtonWithSpin from '../shared/ButtonWithSpin.js'
+import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
 import axios from 'axios'
 

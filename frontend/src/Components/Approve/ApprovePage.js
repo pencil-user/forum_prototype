@@ -3,8 +3,8 @@ import {Table } from 'react-bootstrap'
 import { useHistory  } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from "react-query";
 
-import {UserStore} from '../UserService/UserService.js';
-import ButtonWithSpin from '../shared/ButtonWithSpin.js'
+import {UserStore} from '../../UserService/UserService.js';
+import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
 
 import axios from 'axios'

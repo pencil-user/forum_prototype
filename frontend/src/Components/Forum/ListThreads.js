@@ -9,7 +9,7 @@ import ModalCreateThread from './ModalCreateThread.js'
 import ModalUpdateThread from './ModalUpdateThread.js'
 import ShowThreadRow from './ShowThreadRow.js'
 
-import useModal from '../hooks/useModal.js'
+import useModal from '../../hooks/useModal.js'
 
 
 function ListThreads({data})

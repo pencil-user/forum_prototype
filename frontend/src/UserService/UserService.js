@@ -1,6 +1,6 @@
 import { Store } from "pullstate";
 import axios from 'axios'
-import {AddMessage} from '../MessageService/MessageService.js'
+import {AddMessage} from '../MessagesService/MessageService.js'
 
 
 export const UserStore = new Store({

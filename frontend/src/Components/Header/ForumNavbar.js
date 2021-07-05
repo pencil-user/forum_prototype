@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import {Nav, Navbar} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
-import {UserStore, LogOut} from '../UserService/UserService.js';
+import {UserStore } from '../../UserService/UserService.js';
 
 
 import UserNav from './UserNav.js'

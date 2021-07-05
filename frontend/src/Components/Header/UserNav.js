@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import {Navbar, Nav} from 'react-bootstrap'
-import {UserStore, LogOut} from '../UserService/UserService.js';
+import {UserStore, LogOut} from '../../UserService/UserService.js';
 
 
 function UserNav({showModalLogin, showModalRegister})

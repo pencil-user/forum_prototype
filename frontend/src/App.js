@@ -5,21 +5,20 @@ import {Container, Navbar, Nav, Row, Modal, Button } from 'react-bootstrap'
 
 import { QueryClientProvider, QueryClient } from "react-query"
 
-import Home  from './home/home.js'
-import ShowThread from './posts/ShowThread.js'
-import ApprovePage from './Approve/ApprovePage.js'
-import SearchResults from './SearchResults/SearchResultsPage.js'
+import ForumPage  from './Components/Forum/ForumPage.js'
+import ThreadPage from './Components/Thread/ThreadPage.js'
+import ApprovePage from './Components/Approve/ApprovePage.js'
+import SearchResultsPage from './Components/SearchResults/SearchResultsPage.js'
 
-import MessagesDisplay from './header/MessagesDisplay.js'
-import ForumNavbar from './header/ForumNavbar.js'
-import ModalLogin from './home/ModalLogin.js'
-import ModalRegister from './home/ModalRegister.js'
-import SearchField from './header/SearchField.js'
+import MessagesDisplay from './Components/Header/MessagesDisplay.js'
+import ForumNavbar from './Components/Header/ForumNavbar.js'
+import ModalLogin from './Components/Global/ModalLogin.js'
+import ModalRegister from './Components/Global/ModalRegister.js'
+import SearchField from './Components/Header/SearchField.js'
 import useModal from './hooks/useModal.js'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/Markdown.css'
 
 
 const queryClient = new QueryClient();
@@ -60,19 +59,19 @@ function Routes()
     return  (                  
         <Switch>
             <Route path="/thread/:id/:page">
-                <ShowThread />
+                <ThreadPage />
             </Route>
             <Route path="/thread/:id/">
-                <ShowThread />
+                <ThreadPage />
             </Route>            
             <Route path="/search/:query">
-                <SearchResults />
+                <SearchResultsPage />
             </Route>
             <Route path="/approve/">
                 <ApprovePage />
             </Route>
             <Route path="/">
-                <Home />
+                <ForumPage />
             </Route>             
         </Switch>
     )
