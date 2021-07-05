@@ -408,6 +408,25 @@ V.params = (schema) =>
     }
 }
 
+V.query = (schema) =>
+{
+    return (req, res, next) =>
+    {
+        let {value, errors} = V(req.query, schema)
+        if(errors)
+        {
+            res.status(400).json({
+                errors: errors
+            })
+        }
+        else
+        {
+            req.params = value
+            next();
+        }
+    }
+}
+
 V.body = (schema) =>
 {
     return (req, res, next) =>

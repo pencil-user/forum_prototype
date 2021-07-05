@@ -19,6 +19,13 @@ router.get('/:id',
 )
 
 router.get('/',
+    V.query(
+        {
+            thread_id: V.number(),
+            offset: V.number(),
+            limit:  V.number()
+        }
+    ),
     async (req,res) =>{
 
         let query = k('posts').select("posts.*", 'users.id as user_id', 'users.username', 'users.level as user_level').leftJoin('users', 'posts.created_by_id', 'users.id').orderBy('created_on')
