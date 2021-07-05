@@ -393,6 +393,7 @@ V.params = (schema) =>
 {
     return (req, res, next) =>
     {
+        console.log('-params-')
         let {value, errors} = V(req.params, schema)
         if(errors)
         {
@@ -412,6 +413,8 @@ V.query = (schema) =>
 {
     return (req, res, next) =>
     {
+        console.log('-query-')
+
         let {value, errors} = V(req.query, schema)
         if(errors)
         {
@@ -431,6 +434,7 @@ V.body = (schema) =>
 {
     return (req, res, next) =>
     {
+        console.log('-body-')
 
         let {value, errors} = V(req.body, schema, req.method)
         if(errors)

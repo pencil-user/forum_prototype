@@ -21,9 +21,9 @@ router.get('/:id',
 router.get('/',
     V.query(
         {
-            thread_id: V.number(),
-            offset: V.number(),
-            limit:  V.number()
+            thread_id: V.number().round(),
+            offset: V.number().round(),
+            limit:  V.number(1,100).round()
         }
     ),
     async (req,res) =>{
@@ -90,7 +90,7 @@ router.post('/', auth(0) ,
 router.patch('/:id', auth(1),
     V.body({
         post_body: V.string().required(),
-        thread_id: V.number()
+        thread_id: V.number().round()
         }),
     async (req,res) =>{
         let id = req.params.id
