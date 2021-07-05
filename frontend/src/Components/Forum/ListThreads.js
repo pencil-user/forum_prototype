@@ -1,9 +1,6 @@
-import React, { useState, useContext } from 'react'
-import {Container, Row, Table, Button, Modal } from 'react-bootstrap'
-import { Link, useParams } from 'react-router-dom';
+import React from 'react'
+import { Table, Button } from 'react-bootstrap'
 
-import { useQuery } from "react-query";
-import axios from 'axios'
 
 import ModalCreateThread from './ModalCreateThread.js'
 import ModalUpdateThread from './ModalUpdateThread.js'

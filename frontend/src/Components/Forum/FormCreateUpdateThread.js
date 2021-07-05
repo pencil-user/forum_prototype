@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import {Button, Modal } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 

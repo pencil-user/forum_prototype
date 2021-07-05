@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 
 import { useQueryClient, useMutation } from "react-query";
-import { Link, useParams } from 'react-router-dom';
 import UserHighlight from '../Shared/UserHighlight.js'
 import {UserStore} from '../../UserService/UserService.js'
 

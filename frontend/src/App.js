@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch,  } from 'react-router-dom';
 
-import {Container, Navbar, Nav, Row, Modal, Button } from 'react-bootstrap'
+import {Container } from 'react-bootstrap'
 
 import { QueryClientProvider, QueryClient } from "react-query"
 
@@ -24,7 +24,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const queryClient = new QueryClient();
 
 
-function Forum(props)
+function App(props)
 {
     const [showModalLogin, propsModalLogin] = useModal()
     const [showModalRegister, propsModalRegister] = useModal()
@@ -77,4 +77,4 @@ function Routes()
     )
 }
 
-export default Forum
+export default App

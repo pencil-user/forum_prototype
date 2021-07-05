@@ -4,10 +4,6 @@ import {Modal } from 'react-bootstrap'
 import FormCreateUpdatePost from './FormCreateUpdatePost.js'
 
 
-import axios from 'axios'
-
-
-
 function ModalPost({show, handleClose, defaultValues = {}, thread_id=null})
 {
 
