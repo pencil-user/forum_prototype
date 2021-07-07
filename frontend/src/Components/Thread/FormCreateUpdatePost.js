@@ -67,15 +67,16 @@ function FormCreateUpdatePost({handleClose, defaultValues={}, id=null, thread_id
     <form onSubmit={handleSubmit(onSubmit)}>  
        
         <Modal.Body>
-        <div style={{display:"flex"}}>
+            <div style={{display:"flex"}}>
                 <textarea {...register("post_body")} rows={8} style={{flex: 1}} required/>
             </div>
             <br/><label><input type="checkbox" {...register("show_preview")}/> Show formatting preview</label>
-            {watchedFields.show_preview && 
-                <div className="alert alert-warning">
-                    <ReactMarkdown children={watchedFields.post_body} />
-                </div>
-            }        </Modal.Body>
+                {watchedFields.show_preview && 
+                    <div className="alert alert-warning">
+                        <ReactMarkdown children={watchedFields.post_body} />
+                    </div>
+                }        
+        </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
                 Cancel

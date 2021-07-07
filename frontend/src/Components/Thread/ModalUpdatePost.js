@@ -22,11 +22,11 @@ function ModalUpdatePost({show, handleClose, id=null})
 
     return <>       
         <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-            <Modal.Title>
-                Edit Post #{id}
-            </Modal.Title>
-        </Modal.Header>             
+            <Modal.Header closeButton>
+                <Modal.Title>
+                    Edit Post #{id}
+                </Modal.Title>
+            </Modal.Header>             
             {isLoading ?   
                 <div className="spinner-border" role="status">
                     <span className="sr-only">Loading...</span>
