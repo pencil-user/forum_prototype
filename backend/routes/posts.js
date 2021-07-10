@@ -56,7 +56,7 @@ router.get('/',
 router.post('/', auth(0) ,
     V.body({
         post_body: V.string().required(),
-        thread_id: V.number().required()
+        thread_id: V.number().round().required()
         }),
     async (req,res) =>{
 

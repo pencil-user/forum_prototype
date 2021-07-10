@@ -3,10 +3,10 @@ import {Nav, Navbar} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 import {UserStore } from '../../UserService/UserService.js';
 
-
+import ApproveLink from './ApproveLink.js'
 import UserNav from './UserNav.js'
 
-function ForumNavbar({showModalLogin, showModalRegister})
+function ForumNavbar()
 {
     const user = UserStore.useState(s => s);
 
@@ -19,15 +19,11 @@ function ForumNavbar({showModalLogin, showModalRegister})
                     </Nav.Link>
                 </LinkContainer>
                 {user.level >=2 &&
-                    <LinkContainer to="/approve/">
-                        <Nav.Link>
-                            Approve Users 
-                        </Nav.Link>
-                    </LinkContainer>
+                    <ApproveLink/>
                 }
 
             </Nav >
-            <UserNav showModalLogin={showModalLogin} showModalRegister={showModalRegister}/>
+            <UserNav />
 
         </Navbar>
     )

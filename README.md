@@ -1,5 +1,7 @@
 # Installation instructions:
 
+It takes at least Node 14 to run. Also a MySQL database.
+
 **backend:**
 
 1. use forum_proj_dusan.sql file to create a MySQL database with test data 

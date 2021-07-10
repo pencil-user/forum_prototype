@@ -1,35 +1,30 @@
 import React from 'react'
 
-import { useQuery } from "react-query";
-import axios from 'axios'
+import {  Route  } from 'react-router-dom';
+
+
+import ModalSwitch from '../Shared/ModalSwitch.js'
+import ModalCreateThread from './ModalCreateThread.js'
+import ModalUpdateThread from './ModalUpdateThread.js'
+
 
 import ListThreads from "./ListThreads.js"
 
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
-async function getThreads()
+function ForumPage()
 {
-    let result = await axios.get('/api/threads/')
 
-    console.log("result", result)
-
-    return result.data
+    return  (                  
+        <ModalSwitch modals={[
+            {modal:ModalCreateThread, pathname:'/create-thread/'},
+            {modal:ModalUpdateThread, pathname:'/update-thread/:id'}
+        ]}
+        >
+            <Route path="/">
+                <ListThreads />
+            </Route> 
+        </ModalSwitch>
+        )
 }
 
-function Home()
-{
-    const { data, isLoading, isError } = useQuery("threads", getThreads);
-
-    if(isLoading)
-        return <div className="spinner-border" role="status">
-            <span className="sr-only">Loading...</span>
-        </div>
-      
-    if(isError)
-        return <div>There's an error</div>
-    
-    return <ListThreads data={data}/>
-    
-}
-
-export default Home
+export default ForumPage

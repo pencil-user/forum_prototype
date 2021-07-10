@@ -40,7 +40,7 @@ function ShowPost({post, handleShowModalUpdate, thread})
             <div className="card-header">
                 <>#{post.id} | </>
                 <> {post.created_on} | </>
-                <> <UserHighlight user={post?.username} level={post?.user_level}/> | </>   
+                <> <UserHighlight user={post?.username} id={post?.created_by_id} level={post?.user_level}/> | </>   
                 </div>
             <div className="card-body">
                 <ReactMarkdown children={post.post_body} /> 

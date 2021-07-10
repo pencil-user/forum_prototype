@@ -14,8 +14,9 @@ import MessagesDisplay from './Components/Header/MessagesDisplay.js'
 import ForumNavbar from './Components/Header/ForumNavbar.js'
 import ModalLogin from './Components/Global/ModalLogin.js'
 import ModalRegister from './Components/Global/ModalRegister.js'
+import ModalUserCard from './Components/Global/ModalUserCard.js'
 import SearchField from './Components/Header/SearchField.js'
-import useModal from './hooks/useModal.js'
+import ModalSwitch from './Components/Shared/ModalSwitch.js'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,27 +27,23 @@ const queryClient = new QueryClient();
 
 function App(props)
 {
-    const [showModalLogin, propsModalLogin] = useModal()
-    const [showModalRegister, propsModalRegister] = useModal()
-
 
     return (
         <QueryClientProvider client={queryClient}>
             <Container>
                 <Router>
-                    <ForumNavbar showModalLogin={showModalLogin} showModalRegister={showModalRegister}/>                    
+                    <ForumNavbar />                    
                     <div className="d-flex justify-content-between">
                         <div className="mt-2 mb-2"><h1>Forum</h1></div>
-                        <MessagesDisplay/>
+                        
                         <div className="mt-2">
                             <SearchField />
                         </div>
                     </div>
                     <Routes/>
-                    <ModalLogin {...propsModalLogin()} />
-                    <ModalRegister {...propsModalRegister()} />
                     <div className="text-center">Dušan Benašić 2021</div>
-                </Router>                    
+                </Router>
+                <MessagesDisplay/>                
             </Container>
         </QueryClientProvider >
     )
@@ -57,7 +54,12 @@ function App(props)
 function Routes()
 {
     return  (                  
-        <Switch>
+        <ModalSwitch modals={[
+            {modal:ModalLogin,    pathname:'/login/'},
+            {modal:ModalRegister, pathname:'/register/'},
+            {modal:ModalUserCard, pathname:'/user-info/:id'}
+        ]}
+        >
             <Route path="/thread/:id/:page">
                 <ThreadPage />
             </Route>
@@ -73,7 +75,7 @@ function Routes()
             <Route path="/">
                 <ForumPage />
             </Route>             
-        </Switch>
+        </ModalSwitch>
     )
 }
 

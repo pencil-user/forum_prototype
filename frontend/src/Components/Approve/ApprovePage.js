@@ -39,7 +39,7 @@ function ApprovePage()
     if(user.level < 2)
     {
         history.push('/')
-        return <>haya</>
+        return <>access denied</>
     }
 
     return <ApproveList/>
@@ -48,7 +48,7 @@ function ApprovePage()
 
 function ApproveList()
 {
-    const { data, error, isLoading, isError } = useQuery(["users"], getPendingUsers);
+    const { data, error, isLoading, isError } = useQuery(["pending_users"], getPendingUsers);
 
     if(isLoading)
         return <div className="spinner-border" role="status">
@@ -74,6 +74,7 @@ function ApproveList()
                     {data.map(user => <UserRow key={user.id} user={user}/>)}
                 </tbody>
             </Table>
+            {data.length ===0 && <span>There are no pending users at this time</span>}
         </>
 }
 
@@ -89,15 +90,13 @@ function UserRow({user})
     async function clickApprove()
     {
         await forApprove.mutateAsync({id:user.id})
-        queryClient.invalidateQueries('users')
-        //AddMessage('Thread deleted', 'danger')
+        queryClient.invalidateQueries('pending_users')
     }
 
     async function clickDelete()
     {
         await forDelete.mutateAsync({id:user.id})
-        queryClient.invalidateQueries('users')
-        //AddMessage('Thread deleted', 'danger')
+        queryClient.invalidateQueries('pending_users')
     }
 
     return <>

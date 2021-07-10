@@ -4,6 +4,10 @@ import { useQueryClient, useMutation } from "react-query";
 import UserHighlight from '../Shared/UserHighlight.js'
 import {UserStore} from '../../UserService/UserService.js'
 
+import {
+    useHistory,
+  } from "react-router-dom";
+
 import {AddMessage} from '../../MessagesService/MessageService.js'
 
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
@@ -37,6 +41,8 @@ function ShowThreadRow({thread, showModalUpdate})
 
     const User = UserStore.useState()
 
+    const history = useHistory()
+
 
     async function clickDelete()
     {
@@ -52,7 +58,7 @@ function ShowThreadRow({thread, showModalUpdate})
 
     function clickUpdate()
     {
-        showModalUpdate({id:thread.id})
+        history.push('/update-thread/'+thread.id)
     }
 
     async function alterQuery(id, values)
@@ -144,7 +150,7 @@ function ShowThreadRow({thread, showModalUpdate})
 
             </td>
             <td>{thread.created_on}</td>
-            <td><UserHighlight user={thread.username} level={thread.user_level} /></td>
+            <td><UserHighlight user={thread.username} id={thread?.created_by_id} level={thread.user_level} /></td>
         </tr> 
     )
 }

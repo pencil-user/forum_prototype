@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
-const express = require("express")
+const config = require('config')
 const k = require('../database/database.js')
-const privateKey = "privateKey11223344";
 
 async function getUserById(id)
 {
@@ -17,7 +16,7 @@ function auth(minimumLevel=0)
         if(token)
         {
             try {
-                const decoded = jwt.verify(token, privateKey)
+                const decoded = jwt.verify(token, config.get('secret'))
                 console.log("auth::", decoded)
                 let user = await getUserById(decoded._id)
 

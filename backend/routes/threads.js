@@ -33,7 +33,7 @@ router.post('/', auth(0),
         locked: V.number()
         }),
     async (req,res) =>{
-        let insertion = req.body
+        let insertion = {...req.body}
         if(req._user.level < 2) // only admin can pin/unpin or lock/unlock
         {
             if('pinned' in req.body || 'locked' in req.body)
@@ -54,6 +54,7 @@ router.post('/', auth(0),
 )
 
 router.patch('/:id', auth(1),
+    V.params({id:V.number().round()}),
     V.body({
         title: V.string(),
         thread_body: V.string(),

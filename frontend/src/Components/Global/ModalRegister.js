@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { useForm } from "react-hook-form";
 
+import {AddMessage} from '../../MessagesService/MessageService.js'
+
+
 import axios from 'axios'
 
 
@@ -52,6 +55,7 @@ function FormRegister({handleClose})
         {
             let result = await axios.post('/api/users/', {username:data.username, email:data.email, password:data.password})            
             handleClose()
+            AddMessage('Succesfully registered. Wait for the admin to approve you.')
         }
         catch(error)
         {

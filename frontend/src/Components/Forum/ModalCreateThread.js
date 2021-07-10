@@ -15,6 +15,12 @@ function ModalCreateThread({show, handleClose, defaultValues = {}, thread_id=nul
                 </Modal.Title>
             </Modal.Header>  
             {show && <FormCreateUpdateThread handleClose={handleClose} defaultValues={defaultValues} />}
+            {(!show) && 
+                <Modal.Body>
+                    <div style={{'marginTop':150, 'marginBottom':150 }}>
+                    </div>
+                </Modal.Body>
+            }
         </Modal>
 
     </>

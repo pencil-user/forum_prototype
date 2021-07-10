@@ -16,25 +16,37 @@ function MessagesDisplay()
     }
 
     return( 
-    <div className="row justify-content-md-center">
-        <TransitionGroup >
-            {Messages.map(Message =>
-                <CSSTransition
-                    key={Message.key}
-                    timeout={500}
-                    classNames="TransitionItem1"
-                >
-                    <div 
-                        className={"alert mt-1 "+msgTypes[Message.type]} 
-                        role="alert" 
-                        key={Message.key} 
+    <div 
+        style={{
+            'position':'fixed',
+            'z-index': 1,
+            'left': '0%',
+            'top' : '5%',
+            'width': '100%' /* Full width */
+
+        }}    
+    >
+        <div style={{'width':'fit-content', 'margin': 'auto'}}>
+            <TransitionGroup >
+                {Messages.map(Message =>
+                    <CSSTransition
+                        key={Message.key}
+                        timeout={500}
+                        classNames="TransitionItem1"
                     >
-                        {Message.content}
-                    </div>
-                </CSSTransition>
-                
-            )}
-        </TransitionGroup >
+                        <div 
+                            className={"alert mt-1 "+msgTypes[Message.type]} 
+                            style={{'boxShadow': "0px 5px 5px"}}
+                            role="alert" 
+                            key={Message.key} 
+                        >
+                            {Message.content}
+                        </div>
+                    </CSSTransition>
+                    
+                )}
+            </TransitionGroup >
+        </div>    
     </div>)
 }
 

@@ -13,7 +13,6 @@ import useModal from '../../hooks/useModal.js'
 
 import MainSpinner from '../Shared/MainSpinner.js'
 
-
 import ReactMarkdown from 'react-markdown'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
@@ -57,8 +56,8 @@ function ShowThread()
         <h2>
             {data.title} #{data.id}
             <span style={{'fontSize': '18px', 'verticalAlign':'text-top'}}>
-                {!!data.locked && <span className="badge bg-primary text-light">locked</span>}
-                {!!data.pinned && <span className="badge bg-info text-light">pinned</span>}                
+                {!!data.pinned && <span className="badge bg-primary text-light">pinned</span>}
+                {!!data.locked && <span className="badge bg-info text-light">locked</span>}
             </span>            
         </h2>
         <div><ReactMarkdown children={data.thread_body} /></div>

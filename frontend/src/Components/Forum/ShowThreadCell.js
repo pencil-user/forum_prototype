@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 function ShowThreadCell({thread, disabled})
 {
     const title = <>
-        {!!thread.pinned && <span className="badge bg-primary text-light">pinned</span>}
-        {!!thread.locked && <span className="badge bg-info text-light">locked</span>}  
+        {!!thread.locked && <span className="badge bg-primary text-light">locked</span>} 
+        {!!thread.pinned && <span className="badge bg-info text-light">pinned</span>}         
         {thread.title} 
 
     </>

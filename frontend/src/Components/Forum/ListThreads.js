@@ -1,22 +1,50 @@
 import React from 'react'
 import { Table, Button } from 'react-bootstrap'
 
+import { useQuery } from "react-query";
+import axios from 'axios'
 
-import ModalCreateThread from './ModalCreateThread.js'
+import {
+    useHistory,
+  } from "react-router-dom";
+
 import ModalUpdateThread from './ModalUpdateThread.js'
 import ShowThreadRow from './ShowThreadRow.js'
 
-import useModal from '../../hooks/useModal.js'
+import MainSpinner from '../Shared/MainSpinner.js'
 
-
-function ListThreads({data})
+async function getThreads()
 {
-    const [showModalCreate, propsModalCreate] = useModal()
-    const [showModalUpdate, propsModalUpdate] = useModal()
+    let result = await axios.get('/api/threads/')
+
+    console.log("result", result)
+
+    return result.data
+}
+
+
+
+function ListThreads()
+{
+
+    const history = useHistory();
+
+    const { data, isLoading, isError } = useQuery("threads", getThreads);
+
+    function createThread()
+    {
+        history.push('/create-thread/')
+    }
+
+    if(isLoading)
+        return <MainSpinner/>
+      
+    if(isError)
+        return <div>There's an error</div>
 
     return ( 
         <>
-        <Button variant="primary"  onClick={showModalCreate}>New Thread</Button>
+        <Button variant="primary"  onClick={createThread}>New Thread</Button>
         <Table striped bordered hover className="mt-1">
             <thead>
                 <tr>
@@ -28,14 +56,12 @@ function ListThreads({data})
             </thead>
             <tbody>
                 {data.map(thread =>
-                    <ShowThreadRow key={thread.id} thread={thread} showModalUpdate={showModalUpdate}/>               
+                    <ShowThreadRow key={thread.id} thread={thread} />               
                 )}
 
             </tbody>
         </Table>
-        <Button variant="primary" onClick={showModalCreate}>New Thread</Button>
-        <ModalCreateThread {...propsModalCreate()} />
-        <ModalUpdateThread {...propsModalUpdate()} />
+        <Button variant="primary" onClick={createThread}>New Thread</Button>
         </>
 )
 

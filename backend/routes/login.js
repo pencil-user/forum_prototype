@@ -6,7 +6,7 @@ const express = require('express')
 const k = require('../database/database.js')
 const V = require('../validator/validator.js')
 var Crypto = require("crypto-js/");
-const privateKey = "privateKey11223344";
+const config = require('config')
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router.post('/',
                 return;              
             }
 
-            const token = jwt.sign({_id:user.id}, privateKey)
+            const token = jwt.sign({_id:user.id}, config.get('secret'))
             res.send({...user, token:token})
         }
         else
