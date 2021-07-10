@@ -20,13 +20,14 @@ function MessagesDisplay()
         style={{
             'position':'fixed',
             'z-index': 1,
-            'left': '0%',
-            'top' : '5%',
-            'width': '100%' /* Full width */
+            'left':'50%',
+            'top': '5%',
+            'opacity': 0.90,
+            'transform': 'translate(-50%, -5%)',
 
         }}    
     >
-        <div style={{'width':'fit-content', 'margin': 'auto'}}>
+        <div >
             <TransitionGroup >
                 {Messages.map(Message =>
                     <CSSTransition

@@ -4,8 +4,9 @@ import {Modal } from 'react-bootstrap'
 import FormCreateUpdatePost from './FormCreateUpdatePost.js'
 
 
-function ModalPost({show, handleClose, defaultValues = {}, thread_id=null})
+function ModalCreatePost({show, handleClose, params=null})
 {
+    let thread_id = params?.id
 
     return <>       
         <Modal show={show} onHide={handleClose} size="lg">
@@ -21,4 +22,4 @@ function ModalPost({show, handleClose, defaultValues = {}, thread_id=null})
 }
 
 
-export default ModalPost
+export default ModalCreatePost

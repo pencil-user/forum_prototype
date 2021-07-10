@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react'
 import {Container, Row, Button, Modal, Pagination } from 'react-bootstrap'
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 
 import { useQuery } from "react-query";
 import axios from 'axios'
+
 
 import ModalCreatePost from './ModalCreatePost.js'
 import ModalUpdatePost from './ModalUpdatePost.js'
@@ -69,10 +70,11 @@ function ListPosts({thread})
 {
     const thread_id = thread.id
 
-    const [showModalCreate, propsModalCreate] = useModal({thread_id:thread_id})
     const [showModalUpdate, propsModalUpdate] = useModal()
 
     const history = useHistory()
+
+    const location = useLocation() 
     
     const  routerParams = useParams();
 
@@ -83,7 +85,12 @@ function ListPosts({thread})
 
     function toPage(page)
     {
-        history.push('/thread/'+routerParams.id+'/'+page)
+        history.push('/thread/'+routerParams.id+'/page/'+page)
+    }
+
+    function modalPost()
+    {
+        history.push('/thread/'+routerParams.id+'/create-post/', {background: location})
     }
 
     if(isLoading)
@@ -108,7 +115,7 @@ function ListPosts({thread})
                 <div>
                     {thread.locked ? 
                         <Button variant="primary" className="md-2" disabled>NewPost</Button> :
-                        <Button variant="primary" className="md-2" onClick={showModalCreate}>NewPost</Button>}
+                        <Button variant="primary" className="md-2" onClick={modalPost}>NewPost</Button>}
                 </div>
                 <Pagination>
                     {pageComponents}
@@ -136,13 +143,12 @@ function ListPosts({thread})
                         <div>
                             {thread.locked ? 
                                 <Button variant="primary" className="md-2" disabled>NewPost</Button> :
-                                <Button variant="primary" className="md-2" onClick={showModalCreate}>NewPost</Button>}
+                                <Button variant="primary" className="md-2" onClick={modalPost}>NewPost</Button>}
                         </div>
                         <Pagination>
                             {pageComponents}
                         </Pagination>
                     </div>}
-            <ModalCreatePost {...propsModalCreate()} />
             <ModalUpdatePost {...propsModalUpdate()} />
 
         </>

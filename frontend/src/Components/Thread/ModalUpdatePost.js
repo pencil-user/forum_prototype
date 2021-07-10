@@ -16,10 +16,9 @@ async function getSinglePost({queryKey})
     return result.data
 }
 
-function ModalUpdatePost({show, handleClose, id=null})
+function ModalUpdatePost({show, handleClose, params=null})
 {
-    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], getSinglePost);
-
+    let id = params?.post_id
     return <>       
         <Modal show={show} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
@@ -27,13 +26,22 @@ function ModalUpdatePost({show, handleClose, id=null})
                     Edit Post #{id}
                 </Modal.Title>
             </Modal.Header>             
+            {show && <Loader handleClose={handleClose} id={id}/>}   
+        </Modal>
+
+    </>
+}
+
+function Loader({handleClose, id=null})
+{
+    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], getSinglePost);
+
+    return <>
             {isLoading ?   
                 <div className="spinner-border" role="status">
                     <span className="sr-only">Loading...</span>
                 </div> :
-            <FormCreateUpdatePost handleClose={handleClose} defaultValues={data} id={id} action={'update'}/>}
-        </Modal>
-
+            <FormCreateUpdatePost handleClose={handleClose} defaultValues={data} id={id} action={'update'}/>}        
     </>
 }
 

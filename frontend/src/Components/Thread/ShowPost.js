@@ -7,6 +7,9 @@ import UserHighlight from '../Shared/UserHighlight.js'
 
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
+import {useHistory, useLocation } from 'react-router-dom';
+
+
 
 async function deletePost({...data})
 {
@@ -24,6 +27,10 @@ function ShowPost({post, handleShowModalUpdate, thread})
 
     const User = UserStore.useState()
 
+    const history = useHistory()
+
+    const location = useLocation()
+
     async function clickDelete()
     {
         await mutateAsync({id:post.id})
@@ -32,7 +39,8 @@ function ShowPost({post, handleShowModalUpdate, thread})
 
     async function clickEdit()
     {
-        handleShowModalUpdate({id:post.id})
+        history.push('/thread/'+thread.id+'/update-post/'+post.id, {background: location})
+        //handleShowModalUpdate({id:post.id})
     }
 
     return (

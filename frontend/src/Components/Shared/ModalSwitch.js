@@ -27,12 +27,16 @@ function ModalSwitch({children, modals})
 {
     let location = useLocation();
     //const {id} = useParams()
-    let background = location.state && location.state.background;
+    let background = location?.state?.background;
     let history = useHistory();
 
     let handleCloseObject = {}
 
-    modals.map( x=> handleCloseObject[x.pathname] =
+    let hasOwnModal = false
+
+    modals.map( x=> 
+    {
+        handleCloseObject[x.pathname] =
         ()=>
         {
             if(matchPath(window.location.pathname,{path:location.pathname}))
@@ -42,13 +46,20 @@ function ModalSwitch({children, modals})
             else
             {
             }
-        })
+        }
+
+        if(matchPath(location.pathname,{path:x.pathname}))
+        {
+            hasOwnModal = true
+        }
+
+    })
 
     console.log('location', location.pathname)
     
     return(
         <>
-            <Switch location={background || location}>
+            <Switch location={(hasOwnModal && background) || location}>
                 {children}
             </Switch>
             {modals.map(

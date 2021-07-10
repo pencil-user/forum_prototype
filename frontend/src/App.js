@@ -60,7 +60,7 @@ function Routes()
             {modal:ModalUserCard, pathname:'/user-info/:id'}
         ]}
         >
-            <Route path="/thread/:id/:page">
+            <Route path="/thread/:id/page/:page">
                 <ThreadPage />
             </Route>
             <Route path="/thread/:id/">

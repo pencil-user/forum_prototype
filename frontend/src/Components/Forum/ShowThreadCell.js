@@ -20,7 +20,7 @@ function ShowThreadCell({thread, disabled})
 
     return (
         <div>
-             <Link to={"thread/"+thread.id+'/1'}>{title}</Link>
+             <Link to={"thread/"+thread.id+'/page/1'}>{title}</Link>
         </div>
     )
     
