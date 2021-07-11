@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Modal, Button } from 'react-bootstrap'
 import { useForm } from "react-hook-form";
 import {LoginUser} from '../../UserService/UserService.js';
+import MainSpinner from '../Shared/MainSpinner.js'
 import { useQuery } from "react-query";
 
 
@@ -15,7 +16,7 @@ function ModalUserCard({show, handleClose, params=null})
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Modal User Card {id}
+                    User #{id}
                 </Modal.Title>
             </Modal.Header>
             
@@ -39,14 +40,21 @@ function Loader({handleClose, id})
 
     return <>
         <Modal.Body>
+            {isLoading && <MainSpinner/>}
             {data && 
                     <div>
-                    <div>
-                        Username: {data.username}
+                    <div className="d-flex justify-content-between">
+                        <h5>Username:</h5> <h5>{data.username}</h5>
                     </div>
-                    <div>
-                        Level: {['Anonymous', 'User', 'Administrator'][data.level]}
+                    <div className="d-flex justify-content-between">
+                        <h5>Level:</h5> <h5>{['Anonymous', 'User', 'Administrator'][data.level]}</h5>
                     </div>
+                    <div className="d-flex justify-content-between">
+                        <h5>Number of threads:</h5> <h5>{data.threads}</h5>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <h5>Number of posts:</h5> <h5>{data.posts}</h5>
+                    </div>                    
                 </div>
             }
         </Modal.Body>

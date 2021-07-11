@@ -71,11 +71,17 @@ router.get('/', auth(2),
 
 router.get('/:id',
     async (req,res) =>{
-        let query =  k('users').select("*").where('id', req.params.id)
+        let user = await k('users').select("*").where('id', req.params.id)
+        let countThreads = await k('threads').count('id as number').where('created_by_id', req.params.id)
+        let countPosts =   await k('posts').count('id as number').where('created_by_id', req.params.id)
 
-        let result = await query
-
-        res.json(result[0])
+        res.json(
+            {
+                ...user[0],
+                threads: countThreads[0].number,
+                posts:   countPosts[0].number,
+            
+            })
 
     }
 

@@ -11,7 +11,9 @@ const router = express.Router();
 router.get('/',
     async (req, res) =>
     {
-        let threads = await k('threads').select("threads.*", 'users.id as user_id', 'users.username', 'users.level as user_level').leftJoin('users', 'threads.created_by_id', 'users.id').orderBy([{column: 'threads.pinned', order:'desc'}, 'threads.created_on' ])
+        
+        let count = k('posts').count('id').where('threads.id', k.ref('posts.thread_id')).as('post_count')
+        let threads = await k('threads').select("threads.*", 'users.id as user_id', 'users.username', 'users.level as user_level', count).leftJoin('users', 'threads.created_by_id', 'users.id').orderBy([{column: 'threads.pinned', order:'desc'}, 'threads.created_on' ])
         res.json(threads)         
     }
 
