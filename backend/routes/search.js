@@ -43,7 +43,7 @@ router.get('/:input',
 
         res.append('-offset', req.query.offset)
         res.append('-limit', req.query.limit)
-        res.append('-count', queryCount[0][all])
+        res.append('-count', queryCount[0]['all'])
 
         res.send(result)
 

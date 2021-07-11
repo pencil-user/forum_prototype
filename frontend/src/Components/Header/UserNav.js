@@ -5,6 +5,7 @@ import {
     Link,
   } from "react-router-dom";
 import ModalLink from '../Shared/ModalLink.js'
+import UserHighlight from '../Shared/UserHighlight.js'
 
 function UserNav()
 {
@@ -13,11 +14,11 @@ function UserNav()
     if(!user.logged)
         return <>
             <Navbar.Collapse className="justify-content-end">
-                <ModalLink to={{pathname:'/login/' }}>
+                <ModalLink style={{color:'white'}} to={{pathname:'/login/' }}>
                     Log in 
                 </ModalLink>
                 <Navbar.Text style={{'margin-left':5,'margin-right':5}}> or </Navbar.Text>
-                <ModalLink to={{pathname:'/register/'}}>
+                <ModalLink style={{color:'white'}} to={{pathname:'/register/'}}>
                     Register 
                 </ModalLink>                
             </Navbar.Collapse>
@@ -27,9 +28,9 @@ function UserNav()
         return <>
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
-                    Logged in as {user.username}. 
+                    Logged in as <UserHighlight user={user.username} id={user.id} level={user.level}/>. 
                 </Navbar.Text>
-                <Nav.Link onClick={LogOut}>Log out</Nav.Link>
+                <Nav.Link style={{color:'white'}} onClick={LogOut}>Log out</Nav.Link>
             </Navbar.Collapse>
         </>
 
