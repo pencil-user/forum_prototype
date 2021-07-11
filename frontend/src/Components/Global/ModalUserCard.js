@@ -17,7 +17,7 @@ function ModalUserCard({show, handleClose, params=null})
                 </Modal.Title>
             </Modal.Header>
             
-            {show && <Loader handleClose=handleClose/>}
+            {show && <Loader handleClose={handleClose}/>}
         </Modal>
 
     </> 
