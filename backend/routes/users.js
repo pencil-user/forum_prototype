@@ -50,7 +50,7 @@ router.post('/' ,
     }
 )
 
-router.get('/', auth(2) ,
+router.get('/', auth(2),
     async (req,res) =>{
 
         let result
@@ -68,6 +68,20 @@ router.get('/', auth(2) ,
         res.json(result)
     }
 )
+
+router.get('/:id',
+    async (req,res) =>{
+        let query =  k('users').select("*").where('id', req.params.id)
+
+        let result = await query
+
+        res.json(result[0])
+
+    }
+
+)
+
+
 
 router.patch('/:id', auth(2) ,
     V.params({id:V.number().round()}),
