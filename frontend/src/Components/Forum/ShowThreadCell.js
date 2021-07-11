@@ -19,7 +19,16 @@ function ShowThreadCell({thread, disabled})
 
     if(disabled) return (
         <div>
-            {title} 
+            {title}
+            <span style={{marginLeft:10}}>
+                {pages.map(x=> 
+                    <span
+                        class="bg-secondary text-white rounded" 
+                        style={{margin:'2px', paddingLeft:'5px', paddingRight:'5px'}}
+                    >
+                        {x}
+                    </span>)}
+            </span>
         </div>
     )
 
