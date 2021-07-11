@@ -16,14 +16,24 @@ function ModalUserCard({show, handleClose, params=null})
                     Modal User Card {id}
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Cancel
-                </Button>
-            </Modal.Footer>
+            
+            {show && <Loader handleClose=handleClose/>}
         </Modal>
 
     </> 
+}
+
+function Loader()
+{
+    return <>
+
+    
+        <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+                Cancel
+            </Button>
+        </Modal.Footer>    
+    </>
 }
 
 export default ModalUserCard

@@ -36,6 +36,6 @@ It takes at least Node 14 to run. Also a MySQL database.
 
 - It is possible to register, but admin needs to approve you so you may post
 
-- Search only looks for titles at the moment
+- Search only looks for threads (title and body) at the moment
 
 Dušan Benašić dbenasic@zoho.com

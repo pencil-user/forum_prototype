@@ -9,7 +9,7 @@ import axios from 'axios'
 async function getSearchResults({queryKey})
 {
     const [_key, { query }] = queryKey;
-    let result = await axios.get('/api/search/' + query)
+    let result = await axios.get('/api/search/' + query +'?offset=0')
 
     return result.data
 }

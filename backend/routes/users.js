@@ -70,6 +70,7 @@ router.get('/', auth(2) ,
 )
 
 router.patch('/:id', auth(2) ,
+    V.params({id:V.number().round()}),
     V.body({
         username: V.string(5),
         password: V.string(6),
@@ -87,6 +88,7 @@ router.patch('/:id', auth(2) ,
 
 
 router.delete('/:id', auth(2) ,
+    V.params({id:V.number().round()}),
     async (req,res) =>{
         let ids = await k('users').delete().where('id', req.params.id)
         res.json(ids)

@@ -55,7 +55,7 @@ function FormRegister({handleClose})
         {
             let result = await axios.post('/api/users/', {username:data.username, email:data.email, password:data.password})            
             handleClose()
-            AddMessage('Succesfully registered. Wait for the admin to approve you.')
+            AddMessage('Succesfully registered. Wait for the admin to approve you.', 'warning')
         }
         catch(error)
         {

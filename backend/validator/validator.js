@@ -72,6 +72,10 @@ function V(value, schema = null, method = 'POST')
                     }
 
                 }
+                else if('__vProps' in schema[x] && 'default' in schema[x].__vProps) // entry doesn't exist but there is default in schema
+                {
+                    values[x] = schema[x].__vProps.default
+                }
                 else // entry doesn't exist
                 {
                     // if schema is builder object and there is required
@@ -355,7 +359,9 @@ let builders =
 
     email :{},
 
-    date :{}
+    date :{},
+
+    bool :{}
 
 }
 
@@ -375,6 +381,12 @@ function addUniversal()
         builders[b].required = function(level = 1)
         {
             this.__vProps.required = level
+            return this
+        }
+
+        builders[b].default = function(value)
+        {
+            this.__vProps.default = value
             return this
         }
 
@@ -413,9 +425,9 @@ V.query = (schema) =>
 {
     return (req, res, next) =>
     {
-        console.log('-query-')
 
         let {value, errors} = V(req.query, schema)
+
         if(errors)
         {
             res.status(400).json({
@@ -424,7 +436,7 @@ V.query = (schema) =>
         }
         else
         {
-            req.params = value
+            req.query = value
             next();
         }
     }

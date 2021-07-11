@@ -4,17 +4,15 @@ const express = require('express')
 const k = require('../database/database.js')
 const V = require('../validator/validator.js')
 
-
 const auth = require('../middleware/auth.js')
 const router = express.Router();
 
-
 router.get('/:id',
+    V.params({id:V.number().round()}),
     async (req,res) =>{
         let id = req.params.id
         let result = await k('posts').select("*").where('id', id)
         res.json(result[0])
-
     }
 )
 
@@ -22,8 +20,8 @@ router.get('/',
     V.query(
         {
             thread_id: V.number().round(),
-            offset: V.number().round(),
-            limit:  V.number(1,100).round()
+            offset: V.number().round().default(0),
+            limit:  V.number(1,100).round().default(100)
         }
     ),
     async (req,res) =>{
@@ -36,13 +34,10 @@ router.get('/',
             query = query.where('posts.thread_id', thread_id)
         }
 
-        if(req.query?.offset && req.query?.limit)
-        {
-            res.append('-offset', req.query.offset)
-            res.append('-limit', req.query.offset)
+        res.append('-offset', req.query.offset)
+        res.append('-limit', req.query.limit)
                     
-            query = query.offset(req.query.offset).limit(req.query.limit)
-        }        
+        query = query.offset(req.query.offset).limit(req.query.limit)      
 
         let result = await query
         
@@ -88,6 +83,7 @@ router.post('/', auth(0) ,
 
 
 router.patch('/:id', auth(1),
+    V.params({id:V.number().round()}),
     V.body({
         post_body: V.string().required(),
         thread_id: V.number().round()
@@ -121,6 +117,7 @@ router.patch('/:id', auth(1),
 )
 
 router.delete('/:id', auth(1),
+    V.params({id:V.number().round()}),
     async (req,res) =>{
         let id = req.params.id
 

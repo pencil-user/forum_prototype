@@ -10,7 +10,6 @@ import ModalCreatePost from './ModalCreatePost.js'
 import ModalUpdatePost from './ModalUpdatePost.js'
 
 import ShowPost from './ShowPost.js'
-import useModal from '../../hooks/useModal.js'
 
 import MainSpinner from '../Shared/MainSpinner.js'
 
@@ -70,12 +69,8 @@ function ListPosts({thread})
 {
     const thread_id = thread.id
 
-    const [showModalUpdate, propsModalUpdate] = useModal()
-
     const history = useHistory()
-
     const location = useLocation() 
-    
     const  routerParams = useParams();
 
     let currentPage = routerParams.page ? +routerParams.page : 1
@@ -132,7 +127,6 @@ function ListPosts({thread})
                             post={x}
                             thread={thread} 
                             key={x.id} 
-                            handleShowModalUpdate={showModalUpdate} 
                         />
                     </CSSTransition>
                 )}
@@ -149,8 +143,6 @@ function ListPosts({thread})
                             {pageComponents}
                         </Pagination>
                     </div>}
-            <ModalUpdatePost {...propsModalUpdate()} />
-
         </>
     )
 }

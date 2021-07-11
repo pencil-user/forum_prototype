@@ -18,6 +18,7 @@ router.get('/',
 )
 
 router.get('/:id',
+    V.params({id:V.number().round()}),
     async (req, res) =>
     {  
         let threads = await k('threads').select("*").where('id', req.params.id)
@@ -91,6 +92,7 @@ router.patch('/:id', auth(1),
 )
 
 router.delete('/:id', auth(1),
+    V.params({id:V.number().round()}),
     async (req,res) =>{
 
         let id = req.params.id
