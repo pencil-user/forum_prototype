@@ -17,18 +17,34 @@ router.get('/:input',
     {
         let input = req.params.input
 
-        console.log('INPUT', req.params.input)
-        console.log('OFFSET', req.query.offset)
-        console.log('LIMIT', req.query.limit)
-
-        let query =  k('threads').select('*').where('title', 'like' ,  `%${input}%`).orWhere('thread_body', 'like' , `%${input}%`)
-
-        query = query.offset(req.query.offset).limit(req.query.limit)
+        let result = await  
+            k('threads').select('*')
+            .where(
+                'title', 
+                'like' ,  
+                `%${input}%`
+            ).orWhere(
+                'thread_body', 
+                'like' , 
+                `%${input}%`
+            ).offset(req.query.offset).limit(req.query.limit)
+        
+        let queryCount = await
+            k('threads')
+            .count('id', {'as': 'all'})
+            .where(
+                'title', 
+                'like' ,  
+                `%${input}%`
+            ).orWhere(
+                'thread_body', 
+                'like' , 
+                `%${input}%`)            
 
         res.append('-offset', req.query.offset)
         res.append('-limit', req.query.limit)
-                
-        let result = await query
+        res.append('-count', queryCount[0][all])
+
         res.send(result)
 
     }

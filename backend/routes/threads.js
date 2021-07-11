@@ -9,11 +9,40 @@ const auth = require('../middleware/auth.js')
 const router = express.Router();
 
 router.get('/',
+    V.query({
+        offset: V.number().round().default(0),
+        limit:  V.number(1,100).round().default(100)
+    }),
     async (req, res) =>
     {
-        
-        let count = k('posts').count('id').where('threads.id', k.ref('posts.thread_id')).as('post_count')
-        let threads = await k('threads').select("threads.*", 'users.id as user_id', 'users.username', 'users.level as user_level', count).leftJoin('users', 'threads.created_by_id', 'users.id').orderBy([{column: 'threads.pinned', order:'desc'}, 'threads.created_on' ])
+        let postCount = 
+            k('posts').count('id')
+            .where(
+                'threads.id', 
+                k.ref('posts.thread_id')
+            ).as('post_count')
+
+        let threads = await 
+            k('threads').select(
+                "threads.*", 
+                'users.id as user_id', 
+                'users.username', 
+                'users.level as user_level', 
+                postCount
+            ).leftJoin(
+                'users', 
+                'threads.created_by_id', 
+                'users.id'
+            ).orderBy(
+                [{column: 'threads.pinned', order:'desc'}, 'threads.created_on' ]
+            ).offset(req.query.offset).limit(req.query.limit)      
+
+        let threadCount = await k('threads').count('id', {'as' : 'all'})
+
+
+        res.append('-offset', req.query.offset)
+        res.append('-limit', req.query.limit)
+        res.append('-total', threadCount[0]['all']) 
         res.json(threads)         
     }
 
@@ -117,6 +146,5 @@ router.delete('/:id', auth(1),
     }
 
 )
-
 
 module.exports = router

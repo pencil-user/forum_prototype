@@ -75,6 +75,7 @@ function V(value, schema = null, method = 'POST')
                 else if('__vProps' in schema[x] && 'default' in schema[x].__vProps) // entry doesn't exist but there is default in schema
                 {
                     values[x] = schema[x].__vProps.default
+                    atLeastOne = true
                 }
                 else // entry doesn't exist
                 {
