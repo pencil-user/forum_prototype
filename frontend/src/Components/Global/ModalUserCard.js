@@ -23,7 +23,7 @@ function ModalUserCard({show, handleClose, params=null})
     </> 
 }
 
-function Loader()
+function Loader({handleClose})
 {
     return <>
 
