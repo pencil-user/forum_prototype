@@ -35,6 +35,8 @@ function ListThreads()
 
     const params = useParams();
 
+    const location = useLocation()
+
     const page = +params?.page || 1
 
     const [total, setTotal] = useState(THREADS_PER_PAGE*2)
@@ -43,7 +45,8 @@ function ListThreads()
 
     function createThread()
     {
-        history.push('/create-thread/')
+        history.push('/create-thread/', {background:location})
+
     }
     
     const pages = []
@@ -109,7 +112,9 @@ function ThreadLoader({page, lastPage, setTotal, setIsLoading})
     const offset = (page-1)*THREADS_PER_PAGE
     const limit  = THREADS_PER_PAGE
 
-    const { data, isLoading, isError } = useQuery(["threads", {limit:limit, offset:offset}], getThreads);
+    const queryKey = ["threads", {limit:limit, offset:offset}]
+
+    const { data, isLoading, isError } = useQuery(queryKey, getThreads);
 
     if(isLoading)
         return (<></>)
@@ -121,7 +126,7 @@ function ThreadLoader({page, lastPage, setTotal, setIsLoading})
     }
 
     return data.threads.map(thread =>
-        <ShowThreadRow key={thread.id} thread={thread} />               
+        <ShowThreadRow key={thread.id} thread={thread} queryKey={queryKey} />               
     )
 }
 

@@ -30,7 +30,7 @@ async function alterThread({...params})
 }
 
 
-function ShowThreadRow({thread, showModalUpdate})
+function ShowThreadRow({thread, queryKey})
 {   //{ mutateAsync, isLoading }
     const deleteMutation = useMutation(deleteThread)
     const alterMutation = useMutation(alterThread)   
@@ -63,16 +63,17 @@ function ShowThreadRow({thread, showModalUpdate})
 
     async function alterQuery(id, values)
     {
-        let previousValues = queryClient.getQueryData('threads')
+        //console.log('QUERY DATA',queryClient.getQueryData(queryKey))
+        let previousValues = queryClient.getQueryData(queryKey).threads
         let currentValues = previousValues.map(x => x.id===id ? {...x, ...values} : x)
-        queryClient.setQueryData('threads', currentValues)
+        queryClient.setQueryData(queryKey, {threads: currentValues})
     }
 
     async function deleteFromQuery(id)
     {
-        let previousValues = queryClient.getQueryData('threads')
+        let previousValues = queryClient.getQueryData(queryKey).threads
         let currentValues = previousValues.filter(x => x.id!==id )
-        queryClient.setQueryData('threads', currentValues)
+        queryClient.setQueryData('threads', {threads: currentValues})
     }
 
     async function clickLock()
