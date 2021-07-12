@@ -5,10 +5,6 @@ import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { useQuery } from "react-query";
 import axios from 'axios'
 
-
-import ModalCreatePost from './ModalCreatePost.js'
-import ModalUpdatePost from './ModalUpdatePost.js'
-
 import ShowPost from './ShowPost.js'
 
 import MainSpinner from '../Shared/MainSpinner.js'

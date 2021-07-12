@@ -7,7 +7,9 @@ function UserHighlight({user=null, id=null, level=0})
     {
         let color = (['bg-secondary', 'bg-info', 'bg-success'])[level]
 
-        return <ModalLink to={{pathname:'/user-info/'+id}}><span className={"rounded "+color+" text-white"}>{user}</span></ModalLink>
+        return <ModalLink to={{pathname:'/user-info/'+id}}>
+            <span style={{'padding':2}} className={"rounded "+color+" text-white"}>{user}</span>
+        </ModalLink>
     }
     else
     {
