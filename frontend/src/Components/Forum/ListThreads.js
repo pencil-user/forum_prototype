@@ -35,7 +35,7 @@ function ListThreads()
 
     const params = useParams();
 
-    const page = getCurrentPage(useLocation())//+params?.page || 1
+    const page = +params?.page || 1
 
     const [total, setTotal] = useState(THREADS_PER_PAGE*2)
 
@@ -83,7 +83,7 @@ function ListThreads()
 
                         <Button 
                             variant="outline-success" 
-                            onClick={()=>{history.push('/?page='+(page+1));setIsLoading(true) }}>
+                            onClick={()=>{history.push('/'+(page+1));setIsLoading(true) }}>
                             Load More
                         </Button>
                 }

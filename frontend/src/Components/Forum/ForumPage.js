@@ -19,7 +19,10 @@ function ForumPage()
             {modal:ModalCreateThread, pathname:'/create-thread/'},
             {modal:ModalUpdateThread, pathname:'/update-thread/:id'}
         ]}
-        > 
+        >
+            <Route path="/:page">
+                <ListThreads />
+            </Route>  
             <Route path="/">
                 <ListThreads />
             </Route> 

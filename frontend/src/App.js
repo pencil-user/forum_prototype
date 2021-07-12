@@ -72,6 +72,9 @@ function Routes()
             <Route path="/approve/">
                 <ApprovePage />
             </Route>
+            <Route path="/:page">
+                <ForumPage />
+            </Route> 
             <Route path="/">
                 <ForumPage />
             </Route>             
