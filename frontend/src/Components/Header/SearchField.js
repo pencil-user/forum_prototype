@@ -51,7 +51,7 @@ function SearchField()
             {
                 setSentInput(input)
                 setStatus('loading')
-                let result = await axios.get('/api/search/'+input+'?offset=0')
+                let result = await axios.get('/api/search/'+input+'?offset=0&limit=8')
 
                 if(result.data)
                 {
