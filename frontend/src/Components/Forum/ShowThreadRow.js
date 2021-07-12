@@ -72,7 +72,7 @@ function ShowThreadRow({thread, queryKey})
     async function deleteFromQuery(id)
     {
         let previousValues = queryClient.getQueryData(queryKey).threads
-        let currentValues = previousValues.filter(x => x.id!==id )
+        let currentValues = previousValues.filter(x => x.id!=id )
         queryClient.setQueryData('threads', {threads: currentValues})
     }
 
