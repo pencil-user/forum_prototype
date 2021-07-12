@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useQuery } from "react-query";
 import axios from 'axios'
 
+import MainSpinner from '../Shared/MainSpinner.js'
 
 async function getSearchResults({queryKey})
 {
@@ -24,7 +25,7 @@ function SearchResults()
     let title =  <h2>Results for <span style={{color:'green'}}>{query}</span></h2>
 
     if(isLoading)
-        return <>{title} loading</>
+        return <>{title} <MainSpinner/></>
 
     if(isError)
         return  <>{title} error</>
@@ -32,7 +33,7 @@ function SearchResults()
     return <>
         {title}
         {data.map(item => <div key={item.id}>
-            <Link to={"/thread/"+item.id}>{item.title}</Link>
+            <h5><Link to={"/thread/"+item.id}>{item.title}</Link></h5>
             </div>)
         }
     </>

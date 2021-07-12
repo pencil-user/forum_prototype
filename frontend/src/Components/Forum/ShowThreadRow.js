@@ -73,7 +73,7 @@ function ShowThreadRow({thread, queryKey})
     {
         let previousValues = queryClient.getQueryData(queryKey).threads
         let currentValues = previousValues.filter(x => x.id!=id )
-        queryClient.setQueryData('threads', {threads: currentValues})
+        queryClient.setQueryData(queryKey, {threads: currentValues})
     }
 
     async function clickLock()
