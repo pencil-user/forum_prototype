@@ -44,11 +44,21 @@ CREATE TABLE `messages` (
   `title` varchar(511) CHARACTER SET latin1 DEFAULT NULL,
   `message_body` text CHARACTER SET latin1 NOT NULL,
   `replay_to` int(11) DEFAULT NULL,
-  `author_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `sender_id` int(11) NOT NULL,
+  `recipient_id` int(11) NOT NULL,
+  `read` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`,`sender_id`,`recipient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `messages` */
+
+insert  into `messages`(`id`,`created_on`,`title`,`message_body`,`replay_to`,`sender_id`,`recipient_id`,`read`) values 
+(1,'2021-07-13 08:11:04','conversation starter 1','body cs1',NULL,1,2,0),
+(2,'2021-07-13 08:11:42','conversation starter 2','body cs2',NULL,3,4,0),
+(3,'2021-07-13 08:15:30','msg 1.1','body a',1,2,1,0),
+(4,'2021-07-13 08:15:52','msg 1.2','body b',1,1,2,0),
+(5,'2021-07-13 08:16:03','msg 1.3','body b',1,2,1,0),
+(6,'2021-07-13 08:16:21','msg 1.4','body d',1,1,2,0);
 
 /*Table structure for table `moderators_users_forums` */
 
@@ -75,7 +85,7 @@ CREATE TABLE `posts` (
   `last_edited_by` int(11) DEFAULT NULL,
   `thread_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `posts` */
 
