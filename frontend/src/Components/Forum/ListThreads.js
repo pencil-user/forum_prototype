@@ -57,7 +57,7 @@ function ListThreads()
 
     return ( 
         <>
-        <Button variant="primary"  onClick={createThread}>New Thread</Button>
+        <Button variant="primary" style={{marginBottom:8}} onClick={createThread}>New Thread</Button>
         <Table striped bordered hover className="mt-1">
             <thead>
                 <tr>
@@ -92,7 +92,7 @@ function ListThreads()
                 }
                 </div>
 
-                <div style={{'width':100}}>
+                <div style={{'width':110}}>
 
                 </div>
 

@@ -41,7 +41,7 @@ function App(props)
                         </div>
                     </div>
                     <Routes/>
-                    <div className="text-center">Dušan Benašić 2021</div>
+                    <div className="text-center" style={{marginTop:10}}>Dušan Benašić 2021</div>
                 </Router>
                 <MessagesDisplay/>                
             </Container>

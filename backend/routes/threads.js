@@ -21,6 +21,13 @@ router.get('/',
                 'threads.id', 
                 k.ref('posts.thread_id')
             ).as('post_count')
+        
+        let lastPostCreatedOn =
+            k('posts').max('created_on')
+            .where(
+                'threads.id', 
+                k.ref('posts.thread_id')
+            ).as('last_post_created_on')           
 
         let threads = await 
             k('threads').select(
@@ -28,13 +35,19 @@ router.get('/',
                 'users.id as user_id', 
                 'users.username', 
                 'users.level as user_level', 
-                postCount
+                postCount,
+                lastPostCreatedOn,
             ).leftJoin(
                 'users', 
                 'threads.created_by_id', 
                 'users.id'
-            ).orderBy(
-                [{column: 'threads.pinned', order:'desc'}, 'threads.created_on' ]
+            ).orderByRaw(
+                `
+                threads.pinned DESC,
+                CASE
+                WHEN last_post_created_on IS NULL THEN threads.created_on
+                ELSE last_post_created_on
+                END DESC`
             ).offset(req.query.offset).limit(req.query.limit)      
 
         let threadCount = await k('threads').count('id', {'as' : 'all'})
