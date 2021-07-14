@@ -17,7 +17,7 @@ function UserNav()
                 <ModalLink style={{color:'white'}} to={{pathname:'/login/' }}>
                     Log in 
                 </ModalLink>
-                <Navbar.Text style={{'margin-left':5,'margin-right':5}}> or </Navbar.Text>
+                <Navbar.Text style={{'marginLeft':5,'marginRight':5}}> or </Navbar.Text>
                 <ModalLink style={{color:'white'}} to={{pathname:'/register/'}}>
                     Register 
                 </ModalLink>                

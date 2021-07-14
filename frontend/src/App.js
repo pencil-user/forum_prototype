@@ -9,6 +9,7 @@ import ForumPage  from './Components/Forum/ForumPage.js'
 import ThreadPage from './Components/Thread/ThreadPage.js'
 import ApprovePage from './Components/Approve/ApprovePage.js'
 import SearchResultsPage from './Components/SearchResults/SearchResultsPage.js'
+import MessagesPage from './Components/Messages/MessagesPage.js' 
 
 import AlertDisplay from './Components/Header/AlertDisplay.js'
 import ForumNavbar from './Components/Header/ForumNavbar.js'
@@ -62,6 +63,9 @@ function Routes()
         >
             <Route path="/thread/:id/page/:page">
                 <ThreadPage />
+            </Route>
+            <Route path="/messages/">
+                <MessagesPage />
             </Route>
             <Route path="/thread/:id/">
                 <ThreadPage />
