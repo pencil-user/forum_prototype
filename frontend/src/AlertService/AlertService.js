@@ -1,13 +1,13 @@
 import { Store } from "pullstate";
 
-export const MessageStore = new Store({
-    Messages: [],
+export const AlertStore = new Store({
+    Alerts: [],
 });
 
-export function AddMessage(content, type = "info")
+export function AddAlert(content, type = "info")
 {
     let key = Math.random();
-    MessageStore.update(s=>{s.Messages.push(
+    AlertStore.update(s=>{s.Alerts.push(
         {
             content : content,
             type : type,
@@ -22,14 +22,14 @@ export function AddMessage(content, type = "info")
 
 let curTimeout = null
 
-MessageStore.subscribe(s => s.Messages,
+AlertStore.subscribe(s => s.Alerts,
     s => 
     {
         if(s.length > 0 && !curTimeout)
         {
             curTimeout = setTimeout(() => {
                 curTimeout = null
-                MessageStore.update(s1=>{s1.Messages.length > 0 && s1.Messages.shift()})
+                AlertStore.update(s1=>{s1.Alerts.length > 0 && s1.Alerts.shift()})
             }, 4000)    
         }
 

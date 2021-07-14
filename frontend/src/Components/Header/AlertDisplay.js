@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
-import {MessageStore, AddMessage} from '../../MessagesService/MessageService.js'
+import {MessageStore, AddAlert} from '../../AlertService/AlertService.js'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 import '../../css/TransitionItem.css'
 
-function MessagesDisplay()
+function AlertDisplay()
 {
-    const Messages = MessageStore.useState(s=> s.Messages)
+    const Alerts = AlertStore.useState(s=> s.Alerts)
 
     const msgTypes = {
         info:    'alert-info',
@@ -29,19 +29,19 @@ function MessagesDisplay()
     >
         <div >
             <TransitionGroup >
-                {Messages.map(Message =>
+                {Alerts.map(Alert =>
                     <CSSTransition
-                        key={Message.key}
+                        key={Alert.key}
                         timeout={500}
                         classNames="TransitionItem1"
                     >
                         <div 
-                            className={"alert mt-1 "+msgTypes[Message.type]} 
+                            className={"alert mt-1 "+msgTypes[Alert.type]} 
                             style={{'boxShadow': "0px 5px 5px"}}
                             role="alert" 
-                            key={Message.key} 
+                            key={Alert.key} 
                         >
-                            {Message.content}
+                            {Alert.content}
                         </div>
                     </CSSTransition>
                     
@@ -51,4 +51,4 @@ function MessagesDisplay()
     </div>)
 }
 
-export default MessagesDisplay
+export default AlertDisplay

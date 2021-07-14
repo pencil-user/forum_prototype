@@ -8,7 +8,7 @@ import {
     useHistory,
   } from "react-router-dom";
 
-import {AddMessage} from '../../MessagesService/MessageService.js'
+import {AddAlert} from '../../AlertService/AlertService.js'
 
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
@@ -52,7 +52,7 @@ function ShowThreadRow({thread, queryKey})
         deleteFromQuery(thread.id)
         setStatus(false)
 
-        AddMessage('Thread deleted', 'danger')
+        AddAlert('Thread deleted', 'danger')
 
     }
 

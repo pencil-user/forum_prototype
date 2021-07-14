@@ -10,7 +10,7 @@ import ThreadPage from './Components/Thread/ThreadPage.js'
 import ApprovePage from './Components/Approve/ApprovePage.js'
 import SearchResultsPage from './Components/SearchResults/SearchResultsPage.js'
 
-import MessagesDisplay from './Components/Header/MessagesDisplay.js'
+import AlertDisplay from './Components/Header/AlertDisplay.js'
 import ForumNavbar from './Components/Header/ForumNavbar.js'
 import ModalLogin from './Components/Global/ModalLogin.js'
 import ModalRegister from './Components/Global/ModalRegister.js'
@@ -43,7 +43,7 @@ function App(props)
                     <Routes/>
                     <div className="text-center" style={{marginTop:10}}>Dušan Benašić 2021</div>
                 </Router>
-                <MessagesDisplay/>                
+                <AlertDisplay/>                
             </Container>
         </QueryClientProvider >
     )

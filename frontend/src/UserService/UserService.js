@@ -1,6 +1,6 @@
 import { Store } from "pullstate";
 import axios from 'axios'
-import {AddMessage} from '../MessagesService/MessageService.js'
+import {AddAlert} from '../AlertService/AlertService.js'
 
 
 export const UserStore = new Store({
@@ -24,7 +24,7 @@ export function LoginUser(data)
         s.username = data.username
         
     })
-    AddMessage('Logged in as '+data.username)
+    AddAlert('Logged in as '+data.username)
    
 }
 
@@ -41,6 +41,6 @@ export function LogOut()
         s.id = null
         s.username = null       
     })
-    AddMessage('Logged out')
+    AddAlert('Logged out')
 
 }

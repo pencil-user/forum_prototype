@@ -7,7 +7,7 @@ import { useQueryClient, useMutation } from "react-query";
 
 import { useForm } from "react-hook-form";
 
-import {AddMessage} from '../../MessagesService/MessageService.js'
+import {AddAlert} from '../../AlertService/AlertService.js'
 
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
@@ -50,7 +50,7 @@ function FormCreateUpdateThread({handleClose, defaultValues={}, id=null, action=
         {
             await createMutation.mutateAsync({title: data.title, thread_body: data.thread_body})
             queryClient.invalidateQueries('threads')
-            AddMessage("Thread created.", 'info')
+            AddAlert("Thread created.", 'info')
             handleClose()
         }
         else
