@@ -12,7 +12,7 @@ import SearchResultsPage from './Components/SearchResults/SearchResultsPage.js'
 import MessagesPage from './Components/Messages/MessagesPage.js' 
 
 import AlertDisplay from './Components/Header/AlertDisplay.js'
-import ForumNavbar from './Components/Header/ForumNavbar.js'
+import MainNavbar from './Components/Header/MainNavbar.js'
 import ModalLogin from './Components/Global/ModalLogin.js'
 import ModalRegister from './Components/Global/ModalRegister.js'
 import ModalUserCard from './Components/Global/ModalUserCard.js'
@@ -33,7 +33,7 @@ function App(props)
         <QueryClientProvider client={queryClient}>
             <Container>
                 <Router>
-                    <ForumNavbar />                    
+                    <MainNavbar />                    
                     <div className="d-flex justify-content-between">
                         <div className="mt-2 mb-2"><h1>Forum</h1></div>
                         
@@ -61,11 +61,21 @@ function Routes()
             {modal:ModalUserCard, pathname:'/user-info/:id'}
         ]}
         >
-            <Route path="/thread/:id/page/:page">
-                <ThreadPage />
+
+            <Route path="/messages/:convoid/create-message/">
+                <MessagesPage />
+            </Route>   
+            <Route path="/messages/create-message/">
+                <MessagesPage />
+            </Route>            
+            <Route path="/messages/:convoid">
+                <MessagesPage />
             </Route>
             <Route path="/messages/">
                 <MessagesPage />
+            </Route>
+            <Route path="/thread/:id/page/:page">
+                <ThreadPage />
             </Route>
             <Route path="/thread/:id/">
                 <ThreadPage />

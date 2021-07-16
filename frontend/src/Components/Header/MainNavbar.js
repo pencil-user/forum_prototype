@@ -6,7 +6,7 @@ import {UserStore } from '../../UserService/UserService.js';
 import ApproveLink from './ApproveLink.js'
 import UserNav from './UserNav.js'
 
-function ForumNavbar()
+function MainNavbar()
 {
     const user = UserStore.useState(s => s);
 
@@ -21,6 +21,12 @@ function ForumNavbar()
                 {user.level >=2 &&
                     <ApproveLink/>
                 }
+                {user.level >=1 &&
+                <LinkContainer to="/messages/">
+                    <Nav.Link>
+                        Messages 
+                    </Nav.Link>
+                </LinkContainer>}                
 
             </Nav >
             <UserNav />
@@ -29,4 +35,4 @@ function ForumNavbar()
     )
 }
 
-export default ForumNavbar
+export default MainNavbar

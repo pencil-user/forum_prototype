@@ -6,6 +6,7 @@ import {UserStore} from '../../UserService/UserService.js'
 
 import {
     useHistory,
+    useLocation
   } from "react-router-dom";
 
 import {AddAlert} from '../../AlertService/AlertService.js'
@@ -43,6 +44,8 @@ function ShowThreadRow({thread, queryKey})
 
     const history = useHistory()
 
+    const location = useLocation()
+
 
     async function clickDelete()
     {
@@ -58,7 +61,7 @@ function ShowThreadRow({thread, queryKey})
 
     function clickUpdate()
     {
-        history.push('/update-thread/'+thread.id)
+        history.push('/update-thread/'+thread.id, {background: location})
     }
 
     async function alterQuery(id, values)

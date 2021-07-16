@@ -22,7 +22,7 @@ function ApproveLink()
         <LinkContainer to="/approve/">
             <Nav.Link>
                 Approve Users 
-                {isLoading &&   <Spinner animation="border" size="sm" style={{'marginLeft': '3px'}}/>}
+                {isLoading && <Spinner animation="border" size="sm" style={{'marginLeft': '3px'}}/>}
                 {data && data.length>0 && <span class="badge badge-info" style={{'marginLeft': '3px'}}>{data.length}</span>}               
             </Nav.Link>
         </LinkContainer>

@@ -17,15 +17,27 @@ router.get('/:userid',
     {
         const {userid} = req.params
 
+        let messageCount = 
+            k('messages').count('id')
+            .where(
+                'replay_to',  
+                k.ref('msgid')
+            ).as('message_count')
+     
+
         let result = await
             k('messages').select(
                 'messages.*',
+
+                'messages.id as msgid',
 
                 'sender.username as sender_name', 
                 'sender.level as sender_level',
 
                 'recipient.username as recipient_name', 
                 'recipient.level as recipient_level',
+
+                messageCount
 
             ).leftJoin(
                 {sender: 'users'},
@@ -91,7 +103,7 @@ router.get('/:userid/:convoid',
             ).where('messages.replay_to', convoid).orderBy('created_on')
         
         res.send({
-            conversation: conversation_starter,
+            conversation: conversation_starter[0],
             messages: messages
         })
 
