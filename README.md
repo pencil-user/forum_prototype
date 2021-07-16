@@ -26,6 +26,8 @@ It takes at least Node 14 to run. Also a MySQL database.
 
 - Backend is deliberately slowed down to simulate slow network and showcase caching
 
+- Backend uses a custom validator, also made by me
+
 - Frontend uses React Query and Pullstate for state management
 
 - Forum uses markdown rules for formatting posts
