@@ -64,10 +64,10 @@ function MessagesPage({})
                     return <div className="card mt-1" >
                             <div className="card-header">
                                 <span 
-                                    class="rounded-circle bg-info text-white mr-2"
+                                    class="rounded-circle btn-secondary text-white mr-2"
                                     style={{'paddingLeft':6, 'paddingRight':6, 'paddingTop':1, 'paddingBottom':1,}}
                                 >
-                                    {x.message_count}
+                                    {x.message_count+1}
                                 </span>
 
                                 From <UserHighlight id={x.sender_id} user={x.sender_name} level={x.sender_level}/>
@@ -89,10 +89,10 @@ function MessagesPage({})
                         <div className="card mt-1" key={x.id}>
                         <div className="card-header">
                                 <span 
-                                    class="rounded-circle bg-info text-white mr-2"
+                                    class="rounded-circle btn-secondary text-white mr-2"
                                     style={{'paddingLeft':6, 'paddingRight':6, 'paddingTop':1, 'paddingBottom':1,}}
                                 >
-                                    {x.message_count}
+                                    {x.message_count+1}
                                 </span>
                                 From <UserHighlight id={x.sender_id} user={x.sender_name} level={x.sender_level}/>
                                 To <UserHighlight id={x.recipient_id} user={x.recipient_name} level={x.recipient_level}/>
