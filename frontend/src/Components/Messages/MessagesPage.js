@@ -6,6 +6,7 @@ import axios from 'axios'
 import MainSpinner from '../Shared/MainSpinner.js'
 import UserHighlight from '../Shared/UserHighlight.js'
 
+import FormAddMessages from "./FormAddMessages.js"
 
 
 import SingleConvo from './SingleConvo.js'
@@ -24,6 +25,8 @@ function MessagesPage({})
 {
     const user = UserStore.useState(s => s);
 
+    const [formVisible, setFormVisible] = useState(false)
+
     const { data, error, isLoading, isError } = useQuery(["convos", {userid:user.id}], getConvos);
 
     const params = useParams()
@@ -31,6 +34,16 @@ function MessagesPage({})
     const history = useHistory()
 
     const convoid = params.convoid ? params.convoid : null
+
+    function handleClose()
+    {
+        setFormVisible(false)
+    }
+
+    function showForm()
+    {
+        setFormVisible(true)
+    }
 
     if(user.level<1)
     {
@@ -42,6 +55,8 @@ function MessagesPage({})
         return <MainSpinner />
     
     return <>
+        <button type="button" class="btn btn-primary" onClick={showForm}>New Conversation</button>
+        {formVisible && <FormAddMessages sender_id={user.id} handleClose={handleClose}/>}
         {data.map(
             (x)=>
             {
@@ -61,7 +76,7 @@ function MessagesPage({})
                             <div className="card-body">
 
                                  <Link to={"/messages/"+x.id} key={x.id}>                              
-                                    <h5>{x.title} </h5>                               
+                                    <h5 className="mb-2">{x.title} </h5>                               
                                     {x.message_body.substring(0,300) + ' . . .'}
 
                                  </Link> 
@@ -83,12 +98,12 @@ function MessagesPage({})
                                 To <UserHighlight id={x.recipient_id} user={x.recipient_name} level={x.recipient_level}/>
                         </div>
                             <div className="card-body">
-                                <h5>{x.title}</h5>
+                                <h5 className="mb-2">{x.title}</h5>
                                 {x.message_body} 
                             </div>
                         </div>
 
-                        <SingleConvo convoid={convoid} placeholder={x} key={x.id}/>
+                        <SingleConvo convoid={convoid} placeholder={x} key={x.id} />
                     </>
             }
 

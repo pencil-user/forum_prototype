@@ -76,7 +76,7 @@ router.get('/:userid/:convoid',
 
                 'recipient.username as recipient_name', 
                 'recipient.level as recipient_level',
-                
+                        
             ).leftJoin(
                 {sender: 'users'},
                 'messages.sender_id','=', 'sender.id'
