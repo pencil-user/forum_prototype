@@ -1,6 +1,9 @@
 # Installation instructions:
 
-It takes at least Node 14 to run. And a MySQL 5.x database.
+Requirments:
+
+* at least Node 14 
+* MySQL 5.x database (not 8.x)
 
 **backend:**
 
