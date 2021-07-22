@@ -4,6 +4,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 import {UserStore } from '../../UserService/UserService.js';
 
 import ApproveLink from './ApproveLink.js'
+import MessagesLink from './MessagesLink.js'
 import UserNav from './UserNav.js'
 
 function MainNavbar()
@@ -22,11 +23,7 @@ function MainNavbar()
                     <ApproveLink/>
                 }
                 {user.level >=1 &&
-                <LinkContainer to="/messages/">
-                    <Nav.Link>
-                        Messages 
-                    </Nav.Link>
-                </LinkContainer>}                
+                <MessagesLink/>}                
 
             </Nav >
             <UserNav />

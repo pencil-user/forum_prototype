@@ -53,16 +53,24 @@ function MessagesPage({})
 
     if(isLoading)
         return <MainSpinner />
+
+    const unreadCardStyle = {'borderLeftColor':'orange', 'borderLeftWidth':4}
+    const unreadHeaderStyle = {/*'backgroundColor':'#FFE590'*/ }
+    const unreadContentStyle = {/*'backgroundColor':'#FFFDE1'*/ }
     
     return <>
         <button type="button" class="btn btn-primary" onClick={showForm}>New Conversation</button>
         {formVisible && <FormAddMessages sender_id={user.id} handleClose={handleClose}/>}
         {data.map(
             (x)=>
-            {
-                if(x.id != convoid)
-                    return <div className="card mt-1" >
-                            <div className="card-header">
+                <span key={x.id}>
+                    <div 
+                        className="card mt-1"
+                        style= {(x.unread_count>0 || x.read<1) ? unreadCardStyle : {}} 
+                    >
+                            <div 
+                                className="card-header"
+                            >
                                 <span 
                                     class="rounded-circle btn-secondary text-white mr-2"
                                     style={{'paddingLeft':6, 'paddingRight':6, 'paddingTop':1, 'paddingBottom':1,}}
@@ -75,38 +83,22 @@ function MessagesPage({})
                             </div>
                             <div className="card-body">
 
-                                 <Link to={"/messages/"+x.id} key={x.id}>                              
-                                    <h5 className="mb-2">{x.title} </h5>                               
-                                    {x.message_body.substring(0,300) + ' . . .'}
+                                {x.id == convoid ?
+                                    <>
+                                        <h5 className="mb-2">{x.title}</h5>
+                                        {x.message_body} 
+                                    </>
 
-                                 </Link> 
+                                    :
+                                    <Link to={"/messages/"+x.id} key={x.id}>                              
+                                        <h5 className="mb-2">{x.title} </h5>                               
+                                        {x.message_body.substring(0,300) + ' . . .'}
+                                    </Link> 
+                                }
                             </div>
-
-                        </div>
-                   
-                else
-                    return <>
-                        <div className="card mt-1" key={x.id}>
-                        <div className="card-header">
-                                <span 
-                                    class="rounded-circle btn-secondary text-white mr-2"
-                                    style={{'paddingLeft':6, 'paddingRight':6, 'paddingTop':1, 'paddingBottom':1,}}
-                                >
-                                    {x.message_count+1}
-                                </span>
-                                From <UserHighlight id={x.sender_id} user={x.sender_name} level={x.sender_level}/>
-                                To <UserHighlight id={x.recipient_id} user={x.recipient_name} level={x.recipient_level}/>
-                        </div>
-                            <div className="card-body">
-                                <h5 className="mb-2">{x.title}</h5>
-                                {x.message_body} 
-                            </div>
-                        </div>
-
-                        <SingleConvo convoid={convoid} placeholder={x} key={x.id} />
-                    </>
-            }
-
+                    </div>
+                    {x.id == convoid && <SingleConvo convoid={convoid} placeholder={x} key={x.id} /> }
+                </span>
         )}
     </>
 }

@@ -9,9 +9,11 @@ const auth = require('../middleware/auth.js')
 const router = express.Router();
 
 
+
+
 // get all conversation starters
 
-router.get('/:userid',
+router.get('/:userid', auth(1),
 
     async (req,res)=>  
     {
@@ -23,7 +25,17 @@ router.get('/:userid',
                 'replay_to',  
                 k.ref('msgid')
             ).as('message_count')
-     
+
+        let unreadCount = 
+            k('messages').count('id')
+            .where(
+                'replay_to',  
+                k.ref('msgid')
+            ).andWhere(
+                'read',
+                0
+            ).as('unread_count')
+
 
         let result = await
             k('messages').select(
@@ -37,7 +49,8 @@ router.get('/:userid',
                 'recipient.username as recipient_name', 
                 'recipient.level as recipient_level',
 
-                messageCount
+                messageCount,
+                unreadCount
 
             ).leftJoin(
                 {sender: 'users'},
@@ -55,13 +68,23 @@ router.get('/:userid',
             ).andWhere(
                 t=>t.whereNull('replay_to'))
         
+        let result2 = await k('messages').count('id', {'as' : 'unread'})
+            .where(
+                'recipient_id',  
+                userid
+            ).andWhere(
+                'read',
+                0
+            )
+
+        res.append('-unread-count', result2[0]['unread'])
         res.send(result)
 
     }
 )
 
 // get one conversation
-router.get('/:userid/:convoid',
+router.get('/:userid/:convoid', auth(1),
 
     async (req,res)=>
     {
@@ -110,7 +133,7 @@ router.get('/:userid/:convoid',
     }
 )
 
-router.post('/', //auth(2),
+router.post('/', auth(1),
     V.body({
         'title': V.string().required(),
         'message_body': V.string().required(),
@@ -125,6 +148,18 @@ router.post('/', //auth(2),
             k('messages').insert({...req.body})
         
         res.send(result)
+    }
+)
+
+router.patch('/', auth(1),
+    V.query({'read': V.number().round()}),
+    async (req,res) =>
+    {
+        console.log("UPDATING "+ req.query.read)
+        let result =  await k('messages').update({'read':1}).where('id', req.query.read)
+        let result2 = await k('messages').update({'read':1}).where('replay_to', req.query.read)
+
+        res.send([1])
     }
 )
 

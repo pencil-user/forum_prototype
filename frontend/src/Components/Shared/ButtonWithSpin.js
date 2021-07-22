@@ -23,7 +23,6 @@ function ButtonWithSpin({className='', type=null, disabled=false, spinning=false
                 {spinningLabel}
             </button> )
  
- 
     if(disabled)
         return (
             <button className={`btn disabled ${ className }`}  >
@@ -34,10 +33,7 @@ function ButtonWithSpin({className='', type=null, disabled=false, spinning=false
             <button className={`btn ${ className }`} {...action} >
                 {label}
             </button> ) 
-
-
-
-      
+ 
 }
 
 export default ButtonWithSpin

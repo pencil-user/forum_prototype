@@ -25,6 +25,7 @@ function ShowThreadCell({thread, disabled})
                     <span
                         class="bg-secondary text-white rounded" 
                         style={{margin:'2px', paddingLeft:'5px', paddingRight:'5px'}}
+                        key={x}
                     >
                         {x}
                     </span>)}
@@ -41,6 +42,7 @@ function ShowThreadCell({thread, disabled})
                         to={"thread/"+thread.id+'/page/'+x} 
                         class="bg-primary text-white rounded" 
                         style={{margin:'2px', paddingLeft:'5px', paddingRight:'5px'}}
+                        key={x}
                     >
                         {x}
                     </Link>)}
