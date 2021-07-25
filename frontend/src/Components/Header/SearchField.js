@@ -39,7 +39,7 @@ function SearchField()
 {
     const [input, setInput] = useState('')
     const [status, setStatus] = useState('idle') 
-    const [sentInput, setSentInput] = useState('')
+    const [prevInput, setPrevInput] = useState('')
     const [data, setData] = useState([])
 
     const history = useHistory();
@@ -47,9 +47,9 @@ function SearchField()
     useEffect(
         async ()=>{
 
-            if(input.length>=3 && input != sentInput && status!='loading')
+            if(input.length>=3 && input != prevInput && status!='loading')
             {
-                setSentInput(input)
+                setPrevInput(input)
                 setStatus('loading')
                 let result = await axios.get('/api/search/'+input+'?offset=0&limit=8')
 

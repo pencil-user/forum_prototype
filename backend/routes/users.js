@@ -44,26 +44,38 @@ router.post('/' ,
             return;
         }
 
-
         let ids = await k('users').insert({username, passwordhash, email, level})
         res.json({id: ids[0]})
     }
 )
 
-router.get('/', auth(2),
+router.get('/', auth(1),
+    V.query({
+        offset:   V.number().round().default(0),
+        limit:    V.number(1,100).round().default(100),
+        pending:  V.number(),
+        username: V.string(3),
+    }),
     async (req,res) =>{
 
         let result
-        let query =  k('users').select("*")
+        let query =  k('users').select("*").offset(req.query.offset).limit(req.query.limit)
 
         if(req.query?.pending)
         {
-            result = await query.where('approved', 0)
+            query.andWhere('approved', 0)
         }
-        else
+
+        if(req.query?.username)
         {
-            result = await query
+            query.andWhere(
+                'username', 
+                'like' ,  
+                `%${req.query.username}%`
+            )            
         }
+
+        result = await query
             
         res.json(result)
     }
@@ -87,13 +99,11 @@ router.get('/:id',
 
 )
 
-
-
 router.patch('/:id', auth(2) ,
     V.params({id:V.number().round()}),
     V.body({
         username: V.string(5),
-        password: V.string(6),
+        //password: V.string(6),
         email: V.email(),
         level: V.number(),
         approved: V.number()

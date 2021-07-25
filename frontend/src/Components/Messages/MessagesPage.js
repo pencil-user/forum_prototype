@@ -5,6 +5,7 @@ import {UserStore} from '../../UserService/UserService.js';
 import axios from 'axios'
 import MainSpinner from '../Shared/MainSpinner.js'
 import UserHighlight from '../Shared/UserHighlight.js'
+import SearchUser from './SearchUser.js'
 
 import FormAddMessages from "./FormAddMessages.js"
 
@@ -66,7 +67,7 @@ function MessagesPage({})
                 <span key={x.id}>
                     <div 
                         className="card mt-1"
-                        style= {(x.unread_count>0 || x.read<1) ? unreadCardStyle : {}} 
+                        style= {((x.unread_count>0) || (x.read<1 && x.recipient_id==user.id)) ? unreadCardStyle : {}} 
                     >
                             <div 
                                 className="card-header"

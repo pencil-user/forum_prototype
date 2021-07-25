@@ -9,8 +9,6 @@ const auth = require('../middleware/auth.js')
 const router = express.Router();
 
 
-
-
 // get all conversation starters
 
 router.get('/:userid', auth(1),
@@ -66,7 +64,8 @@ router.get('/:userid', auth(1),
                     'recipient_id', 
                     userid)
             ).andWhere(
-                t=>t.whereNull('replay_to'))
+                t=>t.whereNull('replay_to')
+            ).orderBy('created_on', 'desc')
         
         let result2 = await k('messages').count('id', {'as' : 'unread'})
             .where(

@@ -55,6 +55,8 @@ function SingleConvo({convoid, placeholder})
                 console.log("WE ARE IN MUTATION")
                 await updateMutation.mutateAsync({id:data.conversation.id})
                 queryClient.invalidateQueries("convos")
+                queryClient.invalidateQueries("convos-count")
+
             }
 
         }
@@ -89,7 +91,7 @@ function SingleConvo({convoid, placeholder})
             <div 
                 className="card mt-1" 
                 key={'single'+x.id}
-                style= {!x.read ? unreadCardStyle : {}} 
+                style= {!x.read && x.recipient_id==user.id ? unreadCardStyle : {}} 
             >
                 <div 
                     className="card-header"
