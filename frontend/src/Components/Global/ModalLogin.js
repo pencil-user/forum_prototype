@@ -60,11 +60,11 @@ function FormLogin({handleClose})
         <Modal.Body>
             {errors.username && <div style={{color:'red'}}>{errors.username.message}</div>}
             Username: <br/>
-                <input type="text" {...register('username')} minlength={5} required/>
+                <input type="text" {...register('username')} minLength={5} required/>
                 <br/>
             {errors.password && <div style={{color:'red'}}>{errors.password.message}</div>}
             Password: <br/>    
-                <input type="password" {...register('password')} minlength={6} required/>
+                <input type="password" {...register('password')} minLength={6} required/>
                 <br/>
             <span style={{color:'green'}}>Try 'admin', 'admin123' or 'SomeGuy', 'SomeGuy123'</span>
         </Modal.Body>

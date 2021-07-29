@@ -1,20 +1,10 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 
-import { useQuery } from "react-query";
-
 import FormCreateUpdatePost from './FormCreateUpdatePost.js'
 
-import axios from 'axios'
+import {useGetSinglePost} from '../../QueryHooks/posts.js'
 
-
-async function getSinglePost({queryKey})
-{
-    const [_key, { id }] = queryKey;
-    let result = await axios.get('/api/posts/' + id)
-
-    return result.data
-}
 
 function ModalUpdatePost({show, handleClose, params=null})
 {
@@ -34,7 +24,7 @@ function ModalUpdatePost({show, handleClose, params=null})
 
 function Loader({handleClose, id=null})
 {
-    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], getSinglePost);
+    const { data, isLoading } = useGetSinglePost(id)
 
     return <>
             {isLoading ?   

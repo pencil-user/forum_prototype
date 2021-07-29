@@ -32,6 +32,9 @@ router.get('/:userid', auth(1),
             ).andWhere(
                 'read',
                 0
+            ).andWhere(
+                'recipient_id',
+                userid
             ).as('unread_count')
 
 
@@ -77,7 +80,7 @@ router.get('/:userid', auth(1),
             )
 
         res.append('-unread-count', result2[0]['unread'])
-        res.send(result)
+        res.status(200).send(result)
 
     }
 )
@@ -124,7 +127,7 @@ router.get('/:userid/:convoid', auth(1),
                 'messages.recipient_id','=', 'recipient.id'
             ).where('messages.replay_to', convoid).orderBy('created_on')
         
-        res.send({
+        res.status(200).send({
             conversation: conversation_starter[0],
             messages: messages
         })
@@ -146,7 +149,7 @@ router.post('/', auth(1),
         let result = await
             k('messages').insert({...req.body})
         
-        res.send(result)
+        res.status(200).send(result)
     }
 )
 
@@ -158,7 +161,7 @@ router.patch('/', auth(1),
         let result =  await k('messages').update({'read':1}).where('id', req.query.read)
         let result2 = await k('messages').update({'read':1}).where('replay_to', req.query.read)
 
-        res.send([1])
+        res.status(200).send([1])
     }
 )
 

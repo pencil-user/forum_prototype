@@ -1,44 +1,25 @@
-import React, { useState, useContext } from 'react'
-import {Container, Row, Button, Modal, Pagination } from 'react-bootstrap'
-import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
-
-import { useQuery } from "react-query";
-import axios from 'axios'
+import React from 'react'
+import {Button, Pagination } from 'react-bootstrap'
+import {useParams, useHistory, useLocation } from 'react-router-dom';
 
 import ShowPost from './ShowPost.js'
 
 import MainSpinner from '../Shared/MainSpinner.js'
 
+import {useGetPostsByThread} from '../../QueryHooks/posts.js'
+import {useGetSingleThread}  from '../../QueryHooks/threads.js'
+
 import ReactMarkdown from 'react-markdown'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
-
 import '../../css/TransitionItem.css'
-
-async function getSingleThread({queryKey})
-{
-    const [_key, { id }] = queryKey;
-    let result = await axios.get('/api/threads/' + id)
-
-    return result.data
-}
-
-async function getPostByThread({queryKey})
-{
-    const [_key, { thread_id, offset, limit }] = queryKey;
-    let result = await axios.get('/api/posts?thread_id=' + thread_id +'&offset='+ offset + '&limit='+limit)
-
-    console.log('posts result', result)
-
-    return {total: +result.headers['-total'] , posts: result.data}
-}
 
 const POSTS_PER_PAGE = 5
 
 function ShowThread()
 {
     const { id } = useParams();
-    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], getSingleThread);
+    const { data, isLoading, isError } = useGetSingleThread(id)
 
     if(isLoading)
         return <MainSpinner/>
@@ -71,8 +52,7 @@ function ListPosts({thread})
 
     let currentPage = routerParams.page ? +routerParams.page : 1
 
-    const { data, error, isLoading, isError } = useQuery(["posts" , { thread_id, offset:(POSTS_PER_PAGE * (currentPage-1)), limit:POSTS_PER_PAGE }], getPostByThread);
-
+    const { data, error, isLoading, isError } = useGetPostsByThread(thread_id, currentPage, POSTS_PER_PAGE ) 
 
     function toPage(page)
     {

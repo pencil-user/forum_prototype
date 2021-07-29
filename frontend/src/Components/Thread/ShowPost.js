@@ -1,6 +1,4 @@
 import React from 'react'
-import { useQueryClient, useMutation } from "react-query";
-import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
 import {UserStore} from '../../UserService/UserService.js'
 import UserHighlight from '../Shared/UserHighlight.js'
@@ -9,21 +7,13 @@ import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
 import {useHistory, useLocation } from 'react-router-dom';
 
+import {useDeletePost} from '../../QueryHooks/posts.js'
 
 
-async function deletePost({...data})
-{
-    //console.log('data for createPost', data)
-    let result = await axios.delete('/api/posts/'+data.id)
 
-    return result.data
-
-}
-
-function ShowPost({post, handleShowModalUpdate, thread})
+function ShowPost({post, thread})
 {    
-    const { mutateAsync, isLoading } = useMutation(deletePost)
-    const queryClient = useQueryClient()
+    const {isLoading, deletePost} = useDeletePost()
 
     const User = UserStore.useState()
 
@@ -33,14 +23,12 @@ function ShowPost({post, handleShowModalUpdate, thread})
 
     async function clickDelete()
     {
-        await mutateAsync({id:post.id})
-        queryClient.invalidateQueries('posts')
+        await deletePost(post.id)
     }
 
     async function clickEdit()
     {
         history.push('/thread/'+thread.id+'/update-post/'+post.id, {background: location})
-        //handleShowModalUpdate({id:post.id})
     }
 
     return (

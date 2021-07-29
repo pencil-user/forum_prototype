@@ -39,11 +39,11 @@ router.post('/',
             }
 
             const token = jwt.sign({_id:user.id}, config.get('secret'))
-            res.send({...user, token:token})
+            res.status(200).send({...user, token:token})
         }
         else
         {
-            res.status(401)
+            res.status(404)
             res.send({field:'username', error:'No such user.'})
             
         }

@@ -1,22 +1,12 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 
-import { useQuery } from "react-query";
+import {useGetSingleThread}  from '../../QueryHooks/threads.js'
 
 import FormCreateUpdateThread from './FormCreateUpdateThread.js'
 
 import MainSpinner from '../Shared/MainSpinner.js'
 
-import axios from 'axios'
-
-
-async function getSingleThread({queryKey})
-{
-    const [_key, { id }] = queryKey;
-    let result = await axios.get('/api/threads/' + id)
-
-    return result.data
-}
 
 function ModalUpdateThread({show, handleClose, params=null})
 {
@@ -46,7 +36,7 @@ function ModalUpdateThread({show, handleClose, params=null})
 
 function Loader({handleClose, id=null})
 {
-    const { data, error, isLoading, isError } = useQuery(["thread" , {id}], getSingleThread);
+    const { data, isLoading } = useGetSingleThread(id)
 
     if(isLoading)
         return <MainSpinner /> 

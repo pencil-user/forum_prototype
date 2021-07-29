@@ -1,23 +1,22 @@
-import React, { useState, useContext } from 'react'
-import { Table, Button, Container, Row, Col } from 'react-bootstrap'
-import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useParams, useHistory } from 'react-router-dom';
 import {UserStore} from '../../UserService/UserService.js';
-import axios from 'axios'
 import MainSpinner from '../Shared/MainSpinner.js'
 import UserHighlight from '../Shared/UserHighlight.js'
-import SearchUser from './SearchUser.js'
 
-import FormAddMessages from "./FormAddMessages.js"
+import FormAddMessages from './FormAddMessages.js'
+import {fetchWithJWT} from '../../FetchService/FetchService.js'
 
+import {useGetConvos} from '../../QueryHooks/messages.js'
 
 import SingleConvo from './SingleConvo.js'
 
-import { useQuery } from "react-query";
+//import { useQuery } from "react-query";
 
 async function getConvos({queryKey})
 {
     const [_key, { userid }] = queryKey;
-    let result = await axios.get('/api/messages/' + userid)
+    let result = await fetchWithJWT.get('/api/messages/' + userid)
 
     return result.data
 }
@@ -28,7 +27,7 @@ function MessagesPage({})
 
     const [formVisible, setFormVisible] = useState(false)
 
-    const { data, error, isLoading, isError } = useQuery(["convos", {userid:user.id}], getConvos);
+    const { data, isLoading } = useGetConvos(user.id)
 
     const params = useParams()
 
@@ -56,11 +55,9 @@ function MessagesPage({})
         return <MainSpinner />
 
     const unreadCardStyle = {'borderLeftColor':'orange', 'borderLeftWidth':4}
-    const unreadHeaderStyle = {/*'backgroundColor':'#FFE590'*/ }
-    const unreadContentStyle = {/*'backgroundColor':'#FFFDE1'*/ }
     
     return <>
-        <button type="button" class="btn btn-primary" onClick={showForm}>New Conversation</button>
+        <button type="button" className="btn btn-primary" onClick={showForm}>New Conversation</button>
         {formVisible && <FormAddMessages sender_id={user.id} handleClose={handleClose}/>}
         {data.map(
             (x)=>
@@ -69,11 +66,9 @@ function MessagesPage({})
                         className="card mt-1"
                         style= {((x.unread_count>0) || (x.read<1 && x.recipient_id==user.id)) ? unreadCardStyle : {}} 
                     >
-                            <div 
-                                className="card-header"
-                            >
+                            <div className="card-header">
                                 <span 
-                                    class="rounded-circle btn-secondary text-white mr-2"
+                                    className="rounded-circle btn-secondary text-white mr-2"
                                     style={{'paddingLeft':6, 'paddingRight':6, 'paddingTop':1, 'paddingBottom':1,}}
                                 >
                                     {x.message_count+1}

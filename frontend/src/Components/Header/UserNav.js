@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import {Navbar, Nav} from 'react-bootstrap'
 import {UserStore, LogOut} from '../../UserService/UserService.js';
-import {
-    Link,
-  } from "react-router-dom";
+
 import ModalLink from '../Shared/ModalLink.js'
 import UserHighlight from '../Shared/UserHighlight.js'
 

@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import {AlertStore, AddAlert} from '../../AlertService/AlertService.js'
+import React from 'react'
+import {AlertStore} from '../../AlertService/AlertService.js'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 import '../../css/TransitionItem.css'

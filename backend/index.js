@@ -17,7 +17,7 @@ const app = express()
 app.use(express.json())
 
 app.use(
-    (req,res,next)=>setTimeout(next,1000) )
+    (req,res,next)=>setTimeout(next,1000+Math.random()*2000) )
 
 
 app.use('/api/threads', threads)

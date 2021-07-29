@@ -1,12 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {Modal, Button } from 'react-bootstrap'
-import { useForm } from "react-hook-form";
-import {LoginUser} from '../../UserService/UserService.js';
 import MainSpinner from '../Shared/MainSpinner.js'
-import { useQuery } from "react-query";
-
-
-import axios from 'axios'
+import {useGetUser} from '../../QueryHooks/users.js'
 
 function ModalUserCard({show, handleClose, params=null})
 {
@@ -26,17 +21,9 @@ function ModalUserCard({show, handleClose, params=null})
     </> 
 }
 
-async function getUsers({queryKey})
-{
-    const [_key, { id }] = queryKey;
-    let result = await axios.get('/api/users/' + id)
-
-    return result.data
-}
-
 function Loader({handleClose, id})
 {
-    const { data, isLoading, isError } = useQuery(["users", {id}], getUsers);
+    const { data, isLoading } = useGetUser(id);
 
     return <>
         <Modal.Body>

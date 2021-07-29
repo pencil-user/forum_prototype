@@ -1,39 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from 'react'
 import { useHistory  } from 'react-router-dom';
-import { AsyncTypeahead, Typeahead } from 'react-bootstrap-typeahead';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { useQuery } from "react-query";
 import axios from 'axios'
-
-/*
-function SearchField()
-{
-    const {
-        register,
-        handleSubmit,
-        setError,
-        formState: { errors }
-      } = useForm();
-    
-    const history = useHistory();
-    
-    async function onSubmit(data)
-    {
-        console.log('search data', data)
-
-        if(data.search.length > 3)
-            history.push("/search/"+data.search)
-    }
-    
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" placeholder="Search..." {...register('search')} minlength={3}/>
-        </form>
-
-    )
-
-}*/
 
 function SearchField()
 {

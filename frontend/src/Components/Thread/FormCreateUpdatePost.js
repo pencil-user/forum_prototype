@@ -2,63 +2,34 @@ import React from 'react'
 import {Button, Modal } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 
-import { useQueryClient, useMutation } from "react-query";
-
 import { useForm } from "react-hook-form";
 
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
 import '../../css/Markdown.css'
 
-
-import axios from 'axios'
-
-
-async function createPost({...data})
-{
-    console.log('data for createPost', data)
-    let result = await axios.post('/api/posts/', data)
-
-    return result.data
-
-}
-
-async function updatePost({...data})
-{
-    console.log('data for editpost', data)
-    let result = await axios.patch('/api/posts/'+data.id, {post_body: data.post_body})
-
-    return result.data
-
-}
+import {useUpdatePost, useCreatePost} from '../../QueryHooks/posts.js'
 
 
 function FormCreateUpdatePost({handleClose, defaultValues={}, id=null, thread_id=null, action='create' })
 {
     const { register, handleSubmit, watch } = useForm({ defaultValues });
 
-    const updateMutation = useMutation(updatePost) // { mutateAsync, isLoading }
-    const createMutation = useMutation(createPost)
-
-
-    const queryClient = useQueryClient()
+    const updatePostHook = useUpdatePost() 
+    const createPostHook = useCreatePost()
 
     const watchedFields = watch();
-
 
     async function onSubmit(data)
     {
         if(action=='create')
         {
-            await createMutation.mutateAsync({post_body: data.post_body, thread_id: thread_id})
-            queryClient.invalidateQueries('thread')
-            queryClient.invalidateQueries('posts')
+            await createPostHook.createPost(data.post_body, thread_id)
             handleClose()
         }
         else
         {
-            await updateMutation.mutateAsync({post_body: data.post_body, id: id})
-            queryClient.invalidateQueries('posts')
+            await updatePostHook.updatePost(data.post_body, id)
             handleClose()
         }
     }
@@ -84,7 +55,7 @@ function FormCreateUpdatePost({handleClose, defaultValues={}, id=null, thread_id
             <ButtonWithSpin 
                 className="btn-primary" 
                 type="submit" 
-                spinning={updateMutation.isLoading || createMutation.isLoading} 
+                spinning={updatePostHook.isLoading || createPostHook.isLoading} 
                 label="Post"
                 spinningLabel="Posting..."
             />

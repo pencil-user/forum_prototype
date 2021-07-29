@@ -2,14 +2,11 @@ import React from 'react'
 
 import {  Route  } from 'react-router-dom';
 
-
 import ModalSwitch from '../Shared/ModalSwitch.js'
 import ModalCreateThread from './ModalCreateThread.js'
 import ModalUpdateThread from './ModalUpdateThread.js'
 
-
 import ListThreads from "./ListThreads.js"
-
 
 function ForumPage()
 {

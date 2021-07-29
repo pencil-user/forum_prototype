@@ -3,7 +3,7 @@ import {Button, Modal } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 import UserHighlight from '../Shared/UserHighlight.js'
 import {UserStore} from '../../UserService/UserService.js';
-
+import {fetchWithJWT} from '../../FetchService/FetchService.js'
 
 import { useQueryClient, useMutation } from "react-query";
 
@@ -14,12 +14,10 @@ import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 import '../../css/Markdown.css'
 
 
-import axios from 'axios'
-
 async function createMessage({...data})
 {
     console.log('data for message', data)
-    let result = await axios.post('/api/messages/', data)
+    let result = await fetchWithJWT.post('/api/messages/', data)
 
     return result.data
 

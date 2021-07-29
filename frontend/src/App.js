@@ -28,7 +28,6 @@ const queryClient = new QueryClient();
 
 function App(props)
 {
-
     return (
         <QueryClientProvider client={queryClient}>
             <Container>

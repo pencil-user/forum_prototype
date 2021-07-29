@@ -23,7 +23,7 @@ function ShowThreadCell({thread, disabled})
             <span style={{marginLeft:10}}>
                 {pages.map(x=> 
                     <span
-                        class="bg-secondary text-white rounded" 
+                        className="bg-secondary text-white rounded" 
                         style={{margin:'2px', paddingLeft:'5px', paddingRight:'5px'}}
                         key={x}
                     >
@@ -40,7 +40,7 @@ function ShowThreadCell({thread, disabled})
                 {pages.map(x=> 
                     <Link
                         to={"thread/"+thread.id+'/page/'+x} 
-                        class="bg-primary text-white rounded" 
+                        className="bg-primary text-white rounded" 
                         style={{margin:'2px', paddingLeft:'5px', paddingRight:'5px'}}
                         key={x}
                     >

@@ -1,35 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import {Table } from 'react-bootstrap'
 import { useHistory  } from 'react-router-dom';
-import { useQuery, useQueryClient, useMutation } from "react-query";
 
 import {UserStore} from '../../UserService/UserService.js';
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
+import {useGetPendingUsers, useApproveUser, useDeleteUser} from '../../QueryHooks/users.js'
 
-import axios from 'axios'
-
-
-async function getPendingUsers()
-{
-    let result = await axios.get('/api/users/?pending=1')
-
-    return result.data
-}
-
-async function approveUser({...data})
-{
-    let result = await axios.patch('/api/users/'+data.id, {approved:1})
-
-    return result.data
-}
-
-async function deleteUser({...data})
-{
-    let result = await axios.delete('/api/users/'+data.id)
-
-    return result.data
-}
 
 function ApprovePage()
 {
@@ -38,7 +15,7 @@ function ApprovePage()
 
     if(user.level < 2)
     {
-        history.push('/')
+        history.replace('/')
         return <>access denied</>
     }
 
@@ -48,7 +25,7 @@ function ApprovePage()
 
 function ApproveList()
 {
-    const { data, error, isLoading, isError } = useQuery(["pending_users"], getPendingUsers);
+    const { data, isLoading, isError } = useGetPendingUsers()
 
     if(isLoading)
         return <div className="spinner-border" role="status">
@@ -80,23 +57,19 @@ function ApproveList()
 
 function UserRow({user})
 {
-    const forApprove = useMutation(approveUser)
-    const forDelete = useMutation(deleteUser)
-
-    const queryClient = useQueryClient()
+    const forApprove = useApproveUser(user.id)
+    const forDelete = useDeleteUser(user.id)
 
     const isLoading = forApprove.isLoading || forDelete.isLoading
 
     async function clickApprove()
     {
-        await forApprove.mutateAsync({id:user.id})
-        queryClient.invalidateQueries('pending_users')
+        await forApprove.approveUser()
     }
 
     async function clickDelete()
     {
-        await forDelete.mutateAsync({id:user.id})
-        queryClient.invalidateQueries('pending_users')
+        await forDelete.deleteUser()
     }
 
     return <>

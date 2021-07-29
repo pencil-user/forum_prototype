@@ -1,7 +1,6 @@
 import { Store } from "pullstate";
-import axios from 'axios'
 import {AddAlert} from '../AlertService/AlertService.js'
-
+import {addJWT, removeJWT} from '../FetchService/FetchService.js'
 
 export const UserStore = new Store({
     logged: false,
@@ -13,9 +12,7 @@ export const UserStore = new Store({
 export function LoginUser(data)
 {
 
-    axios.defaults.headers.common = {
-        'x-auth-token': data.token
-    }
+    addJWT(data.token)
 
     UserStore.update(s=>{
         s.logged = true
@@ -30,10 +27,7 @@ export function LoginUser(data)
 
 export function LogOut()
 {
-
-    axios.defaults.headers.common = {
-        
-    }    
+    removeJWT() 
 
     UserStore.update(s=>{
         s.logged = false

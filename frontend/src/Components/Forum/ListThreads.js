@@ -1,32 +1,15 @@
-import React, { useState, useContext } from 'react'
-import { Table, Button, Container, Row, Col } from 'react-bootstrap'
-import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
-
-
-import { useQuery } from "react-query";
-import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { Table, Button } from 'react-bootstrap'
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 
 import ShowThreadRow from './ShowThreadRow.js'
 
 import MainSpinner from '../Shared/MainSpinner.js'
 
+import {useGetThreadPage} from '../../QueryHooks/threads.js'
+
 const THREADS_PER_PAGE = 10
 
-function getCurrentPage(location) {
-    let query = new URLSearchParams(location.search);
-    return +query.get("page") || 1
-
-}
-
-async function getThreads({queryKey})
-{
-    const [_key, { offset, limit }] = queryKey;
-
-    let result = await axios.get('/api/threads/?offset='+offset+'&limit='+limit)
-
-    console.log("result", result)
-    return { total:+result.headers['-total'] , threads:result.data }
-}
 
 function ListThreads()
 {
@@ -112,21 +95,25 @@ function ThreadLoader({page, lastPage, setTotal, setIsLoading})
     const offset = (page-1)*THREADS_PER_PAGE
     const limit  = THREADS_PER_PAGE
 
-    const queryKey = ["threads", {limit:limit, offset:offset}]
+    const { data, isLoading, isError } = useGetThreadPage(offset, limit);
 
-    const { data, isLoading, isError } = useQuery(queryKey, getThreads);
+    useEffect(
+        ()=>{
+            if(page == lastPage && !isLoading)
+            {
+                setTotal(data.total)
+                setIsLoading(false)
+            }            
+        },
+    [isLoading, data])
 
     if(isLoading)
         return (<></>)
     
-    if(page == lastPage)
-    {
-        setTotal(data.total)
-        setIsLoading(false)
-    }
+
 
     return data.threads.map(thread =>
-        <ShowThreadRow key={thread.id} thread={thread} queryKey={queryKey} />               
+        <ShowThreadRow key={thread.id} thread={thread} limit={limit} offset={offset} />               
     )
 }
 

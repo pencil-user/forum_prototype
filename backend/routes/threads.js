@@ -56,7 +56,7 @@ router.get('/',
         res.append('-offset', req.query.offset)
         res.append('-limit', req.query.limit)
         res.append('-total', threadCount[0]['all']) 
-        res.json(threads)         
+        res.status(200).json(threads)         
     }
 
 )
@@ -66,7 +66,7 @@ router.get('/:id',
     async (req, res) =>
     {  
         let threads = await k('threads').select("*").where('id', req.params.id)
-        res.json(threads[0])
+        res.status(200).json(threads[0])
     }    
 )
 
@@ -94,7 +94,10 @@ router.post('/', auth(0),
             insertion = req.body
 
         let ids = await k('threads').insert(insertion)
-        res.json({id: ids[0]})
+
+        let result = await k('threads').select("*").where('id', ids[0])
+
+        res.status(200).json(result[0])
     }
 )
 
@@ -130,8 +133,10 @@ router.patch('/:id', auth(1),
             }
         }
 
-        let ids = await k('threads').update(req.body).where('id', req.params.id)
-        res.json({id: ids[0]})
+        await k('threads').update(req.body).where('id', req.params.id)
+        let result = await k('threads').select("*").where('id', req.params.id)
+
+        res.status(200).json(result[0])
     }
 )
 

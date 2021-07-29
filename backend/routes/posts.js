@@ -54,7 +54,7 @@ router.get('/',
         res.append('-offset', req.query.offset)
         res.append('-limit', req.query.limit)
         res.append('-total', result2[0]['count(*)'])
-        res.json(result)
+        res.status(200).json(result)
     }
 )
 
@@ -86,7 +86,7 @@ router.post('/', auth(0) ,
         console.log('insertion', insertion)
 
         let ids = await k('posts').insert(insertion)
-        res.json({id: ids[0]})
+        res.status(200).json({id: ids[0]})
     }
 )
 
@@ -120,8 +120,8 @@ router.patch('/:id', auth(1),
         }
 
         let new_id = await k('posts').update(req.body).where('id', id)
-        let result = await k('posts').select('*').where('id', new_id)
-        res.json(result)
+        let result = await k('posts').select('*').where('id', id)
+        res.status(200).json(result[0])
     }
 )
 
@@ -142,7 +142,7 @@ router.delete('/:id', auth(1),
         }
 
         let result = await k('posts').del().where('id', id)
-        res.json(result)
+        res.status(200).json(result)
 
     }
 )

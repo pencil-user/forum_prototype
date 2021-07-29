@@ -2,44 +2,21 @@ import React from 'react'
 import {Button, Modal } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 
-
-import { useQueryClient, useMutation } from "react-query";
-
 import { useForm } from "react-hook-form";
 
 import {AddAlert} from '../../AlertService/AlertService.js'
 
 import ButtonWithSpin from '../Shared/ButtonWithSpin.js'
 
-import axios from 'axios'
+import {useUpdateThread, useCreateThread} from '../../QueryHooks/threads.js'
 
-
-async function createThread({...data})
-{
-    console.log('data for createThread', data)
-    let result = await axios.post('/api/threads/', data)
-
-    return result.data
-
-}
-
-async function updateThread({...data})
-{
-
-    let result = await axios.patch('/api/threads/'+data.id, {thread_body: data.thread_body, title:data.title})
-
-    return result.data
-
-}
 
 function FormCreateUpdateThread({handleClose, defaultValues={}, id=null, action='create' })
 {
     const { register, handleSubmit, watch } = useForm({ defaultValues });
 
-    const createMutation = useMutation(createThread) // { mutateAsync, isLoading }
-    const updateMutation = useMutation(updateThread)
-
-    const queryClient = useQueryClient()
+    const createThreadHook = useCreateThread(id)
+    const updateThreadHook = useUpdateThread(id)
 
     const watchedFields = watch();
 
@@ -48,15 +25,13 @@ function FormCreateUpdateThread({handleClose, defaultValues={}, id=null, action=
         console.log("we are here", data)
         if(action=='create')
         {
-            await createMutation.mutateAsync({title: data.title, thread_body: data.thread_body})
-            queryClient.invalidateQueries('threads')
+            await createThreadHook.createThread({title: data.title, thread_body: data.thread_body})
             AddAlert("Thread created.", 'info')
             handleClose()
         }
         else
         {
-            await updateMutation.mutateAsync({title: data.title, thread_body: data.thread_body, id:id})
-            queryClient.invalidateQueries('threads')
+            await updateThreadHook.updateThread({title: data.title, thread_body: data.thread_body, id:id})
             handleClose()
         }
     }
@@ -85,7 +60,7 @@ function FormCreateUpdateThread({handleClose, defaultValues={}, id=null, action=
             <ButtonWithSpin 
                 className="btn-primary" 
                 type="submit" 
-                spinning={updateMutation.isLoading || createMutation.isLoading} 
+                spinning={updateThreadHook.isLoading || createThreadHook.isLoading} 
                 label={action === 'create' ? "Post" : "Edit"}
             />
         </Modal.Footer>

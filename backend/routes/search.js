@@ -45,7 +45,7 @@ router.get('/:input',
         res.append('-limit', req.query.limit)
         res.append('-count', queryCount[0]['all'])
 
-        res.send(result)
+        res.status(200).send(result)
 
     }
 )
