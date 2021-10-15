@@ -5,49 +5,49 @@ import {fetchWithJWT} from '../FetchService/FetchService.js'
 
 export function useGetPendingUsers()
 {
-    const { data, error, isLoading, isError } = useQuery(["pending_users"], doGetPendingUsers);
+    const { data, error, isLoading, isError } = useQuery(
+        ["pending_users"], 
+        async () =>{
+            let result = await fetchWithJWT.get('/api/users/?pending=1')
 
-    async function doGetPendingUsers()
-    {
-        let result = await fetchWithJWT.get('/api/users/?pending=1')
+            return result.data
+        }
+    )
 
-        return result.data
-    }
 
     return { data, error, isLoading, isError }
 }
 
 export function useApproveUser(id)
 {
-    const { mutateAsync, isLoading } = useMutation(doApproveUser)
+    const { mutateAsync, isLoading } = useMutation(
+        async ({...data}) =>{
+            let result = await fetchWithJWT.patch('/api/users/'+data.id, {approved:1})
+
+            return result.data
+        }
+    )
+
     const queryClient = useQueryClient()
-
-    async function doApproveUser({...data})
-    {
-        let result = await fetchWithJWT.patch('/api/users/'+data.id, {approved:1})
-
-        return result.data
-    }
 
     async function approveUser()
     {
         await mutateAsync({id:id})
         queryClient.invalidateQueries('pending_users')
     }
-    return {isLoading, approveUser}
 
+    return {isLoading, approveUser}
 }
 
 export function useDeleteUser(id)
 {
-    const { mutateAsync, isLoading } = useMutation(doDeleteUser)
+    const { mutateAsync, isLoading } = useMutation(
+        async ({...data})=>{
+            let result = await fetchWithJWT.delete('/api/users/'+data.id)
+            return result.data
+        }    
+    )
     const queryClient = useQueryClient()
-
-    async function doDeleteUser({...data})
-    {
-        let result = await fetchWithJWT.delete('/api/users/'+data.id)
-        return result.data
-    }
 
     async function deleteUser()
     {
@@ -61,15 +61,15 @@ export function useDeleteUser(id)
 
 export function useGetUser(id)
 {
-    const { data, isLoading, isError } = useQuery(["users", {id}], doGetUsers);
+    const { data, isLoading, isError } = useQuery(
+        ["users", {id}], 
+        async ({queryKey})=>{
+            const [_key, { id }] = queryKey;
+            let result = await fetchWithJWT.get('/api/users/' + id)
 
-    async function doGetUsers({queryKey})
-    {
-        const [_key, { id }] = queryKey;
-        let result = await fetchWithJWT.get('/api/users/' + id)
-
-        return result.data
-    }
+            return result.data
+        }
+    )
 
     return { data, isLoading, isError }
 

@@ -1,12 +1,11 @@
 "use strict"
 
 const express = require('express')
+const router = express.Router();
+
 const k = require('../database/database.js')
 const V = require('../validator/validator.js')
-
 const auth = require('../middleware/auth.js')
-
-const router = express.Router();
 
 router.get('/',
     V.query({
@@ -51,7 +50,6 @@ router.get('/',
             ).offset(req.query.offset).limit(req.query.limit)      
 
         let threadCount = await k('threads').count('id', {'as' : 'all'})
-
 
         res.append('-offset', req.query.offset)
         res.append('-limit', req.query.limit)
@@ -112,7 +110,6 @@ router.patch('/:id', auth(1),
     async (req,res) =>{
         let id = req.params.id
 
-
         if(req._user.level < 2) // only admin can pin/unpin or lock/unlock
         {
             if('pinned' in req.body || 'locked' in req.body)
@@ -160,9 +157,7 @@ router.delete('/:id', auth(1),
         let result  = await k('threads').del().where('id', id)
         let result2 = await k('posts').del().where('thread_id', id)
         res.json(result[0])
-
     }
-
 )
 
 module.exports = router

@@ -10,7 +10,6 @@ const config = require('config')
 
 const router = express.Router();
 
-
 router.post('/',
     V.body({
         username: V.string(5).required(),
@@ -37,7 +36,6 @@ router.post('/',
                 res.send({field:'username', error:'User not yet approved.'}) 
                 return;              
             }
-
             const token = jwt.sign({_id:user.id}, config.get('secret'))
             res.status(200).send({...user, token:token})
         }
@@ -45,7 +43,6 @@ router.post('/',
         {
             res.status(404)
             res.send({field:'username', error:'No such user.'})
-            
         }
     }
 )

@@ -19,12 +19,9 @@ import ModalUserCard from './Components/Global/ModalUserCard.js'
 import SearchField from './Components/Header/SearchField.js'
 import ModalSwitch from './Components/Shared/ModalSwitch.js'
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 const queryClient = new QueryClient();
-
 
 function App(props)
 {
@@ -48,8 +45,6 @@ function App(props)
         </QueryClientProvider >
     )
 }
-
-
 
 function Routes()
 {

@@ -5,9 +5,8 @@ const REFETCH_INTERVAL = 60*1000
 
 export function useGetSingleThread(id)
 {
-    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], doGetSingleThread,  {
-            refetchInterval: REFETCH_INTERVAL,
-        })
+    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], doGetSingleThread,  
+    {refetchInterval: REFETCH_INTERVAL} )
 
     async function doGetSingleThread({queryKey})
     {
@@ -22,21 +21,19 @@ export function useGetSingleThread(id)
 
 export function useGetThreadPage(offset, limit)
 {
-    const queryKey = ["threads", {limit:limit, offset:offset}]
 
-    const { data, isLoading, isError } = useQuery(queryKey, DoGetThreads,  {
-        refetchInterval: REFETCH_INTERVAL,
-    });
+    const { data, isLoading, isError } = useQuery(
+        ["threads", {limit:limit, offset:offset}], 
+        async ({queryKey})=>
+        {
+            const [_key, { offset, limit }] = queryKey;
 
-    async function DoGetThreads({queryKey})
-    {
-        const [_key, { offset, limit }] = queryKey;
+            let result = await fetchWithJWT.get('/api/threads/?offset='+offset+'&limit='+limit)
 
-        let result = await fetchWithJWT.get('/api/threads/?offset='+offset+'&limit='+limit)
-
-        console.log("result", result)
-        return { total:+result.headers['-total'] , threads:result.data }
-    }
+            console.log("result", result)
+            return { total:+result.headers['-total'] , threads:result.data }
+        },  
+        {refetchInterval: REFETCH_INTERVAL});
 
     return { data, isLoading, isError }
 
@@ -45,15 +42,15 @@ export function useGetThreadPage(offset, limit)
 export function useCreateThread(id)
 {
     const queryClient = useQueryClient()
-    const { mutateAsync, isLoading } = useMutation(doCreateThread)
-
-    async function doCreateThread({...data})
-    {
-        console.log('data for createThread', data)
-        let result = await fetchWithJWT.post('/api/threads/', data)
-    
-        return result.data
-    }
+    const { mutateAsync, isLoading } = useMutation(
+        async ({...data})=>
+        {
+            console.log('data for createThread', data)
+            let result = await fetchWithJWT.post('/api/threads/', data)
+        
+            return result.data
+        }
+    )
 
     async function createThread({...data})
     {
@@ -68,19 +65,19 @@ export function useCreateThread(id)
 export function useUpdateThread(id, offset=null, limit=null)
 {
     const queryClient = useQueryClient()
-    const { mutateAsync, isLoading } = useMutation(doUpdateThread)
+    const { mutateAsync, isLoading } = useMutation(
+        async ({...data})=>
+        {
+            let result = await fetchWithJWT.patch('/api/threads/'+data.id, data.data)
+            return result.data
+        }       
+    )
 
     async function alterQuery(values)
     {
         let previousValues = queryClient.getQueryData(["threads", {limit:limit, offset:offset}]).threads
         let currentValues = previousValues.map(x => x.id===id ? {...x, ...values} : x)
         queryClient.setQueryData(["threads", {limit:limit, offset:offset}], {threads: currentValues})
-    }
-
-    async function doUpdateThread({...data})
-    {
-        let result = await fetchWithJWT.patch('/api/threads/'+data.id, data.data)
-        return result.data
     }
 
     async function lockThread(toggle)
@@ -112,13 +109,13 @@ export function useUpdateThread(id, offset=null, limit=null)
 export function useDeleteThread(id, offset, limit)
 {
     const queryClient = useQueryClient()
-    const { mutateAsync, isLoading } = useMutation(doDeleteThread)
-
-    async function doDeleteThread({...data})
-    {
-        let result = await fetchWithJWT.delete('/api/threads/'+data.id)
-        return result.data
-    }
+    const { mutateAsync, isLoading } = useMutation(
+        async ({...data}) =>
+        {
+            let result = await fetchWithJWT.delete('/api/threads/'+data.id)
+            return result.data
+        }
+    )
 
     async function deleteThread()
     {

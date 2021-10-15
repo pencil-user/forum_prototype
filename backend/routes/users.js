@@ -1,14 +1,13 @@
 "use strict"
 
 const express = require('express')
+const router = express.Router();
+
 const k = require('../database/database.js')
 const V = require('../validator/validator.js')
+const auth = require('../middleware/auth.js')
 
 var Crypto = require("crypto-js/");
-
-
-const auth = require('../middleware/auth.js')
-const router = express.Router();
 
 router.post('/' ,
     V.body({
@@ -92,9 +91,7 @@ router.get('/:id',
                 ...user[0],
                 threads: countThreads[0].number,
                 posts:   countPosts[0].number,
-            
             })
-
     }
 
 )
@@ -116,7 +113,6 @@ router.patch('/:id', auth(2) ,
     }
 )
 
-
 router.delete('/:id', auth(2) ,
     V.params({id:V.number().round()}),
     async (req,res) =>{
@@ -124,6 +120,5 @@ router.delete('/:id', auth(2) ,
         res.json(ids)
     }
 )
-
 
 module.exports = router

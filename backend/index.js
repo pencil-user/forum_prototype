@@ -10,15 +10,12 @@ const search = require('./routes/search.js')
 const users = require('./routes/users.js')
 const messages = require('./routes/messages.js')
 
-
 const app = express()
-
 
 app.use(express.json())
 
 app.use(
     (req,res,next)=>setTimeout(next,1000+Math.random()*2000) )
-
 
 app.use('/api/threads', threads)
 
