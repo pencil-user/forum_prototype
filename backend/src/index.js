@@ -14,8 +14,8 @@ const app = express()
 
 app.use(express.json())
 
-app.use(
-    (req,res,next)=>setTimeout(next,1000+Math.random()*2000) )
+//app.use(
+//   (req, res, next) => setTimeout(next, 1000 + Math.random() * 2000))
 
 app.use('/api/threads', threads)
 
@@ -30,4 +30,4 @@ app.use('/api/users', users)
 app.use('/api/messages', messages)
 
 
-app.listen(config.get('port'), () => console.log("server working at "+config.get('port')))
+app.listen(config.get('port'), () => console.log("server working at " + config.get('port')))

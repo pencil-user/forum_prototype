@@ -1,23 +1,22 @@
-import React  from 'react'
+import React from 'react'
 import { Modal } from 'react-bootstrap'
 
 import FormCreateUpdateThread from './FormCreateUpdateThread.js'
 
 
-function ModalCreateThread({show, handleClose, defaultValues = {}, thread_id=null})
-{
+function ModalCreateThread({ show, handleClose, defaultValues = {}, thread_id = null }) {
 
-    return <>       
+    return <>
         <Modal show={show} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
                 <Modal.Title>
                     New Thread
                 </Modal.Title>
-            </Modal.Header>  
+            </Modal.Header>
             {show && <FormCreateUpdateThread handleClose={handleClose} defaultValues={defaultValues} />}
-            {(!show) && 
+            {(!show) &&
                 <Modal.Body>
-                    <div style={{'marginTop':150, 'marginBottom':150 }}>
+                    <div style={{ 'marginTop': 150, 'marginBottom': 150 }}>
                     </div>
                 </Modal.Body>
             }

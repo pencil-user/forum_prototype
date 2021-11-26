@@ -3,20 +3,19 @@ import React from 'react';
 import {
     Link,
     useLocation
-  } from "react-router-dom";
+} from "react-router-dom";
 
-function ModalLink({children, to, style, className})
-{
+function ModalLink({ children, to, style, className }) {
     let location = useLocation();
-    return <Link 
-            style={style}
-            className={className}
-            to={{
-                ...to,
-                state:{...to.state, background: location }
-            }}>
-                {children}
-            </Link>
+    return <Link
+        style={style}
+        className={className}
+        to={{
+            ...to,
+            state: { ...to.state, background: location }
+        }}>
+        {children}
+    </Link>
 }
 
 export default ModalLink

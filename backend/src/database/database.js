@@ -10,11 +10,7 @@ const knex = require('knex')({
         password : config.get('MySQL.password'),
         database :  config.get('MySQL.database'),
         dateStrings: true
-
     }
 })
 
 module.exports = knex
-
-
-

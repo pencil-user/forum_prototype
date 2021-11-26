@@ -1,7 +1,7 @@
 import React from 'react'
 import {Nav, Navbar} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
-import {UserStore } from '../../UserService/UserService.js';
+import {useUser } from '../../UserService/UserService.js';
 
 import ApproveLink from './ApproveLink.js'
 import MessagesLink from './MessagesLink.js'
@@ -9,7 +9,7 @@ import UserNav from './UserNav.js'
 
 function MainNavbar()
 {
-    const user = UserStore.useState(s => s);
+    const {isLogged, isAdmin} = useUser()
 
     return(
         <Navbar bg="dark" variant="dark">
@@ -19,10 +19,10 @@ function MainNavbar()
                         Home 
                     </Nav.Link>
                 </LinkContainer>
-                {user.level >=2 &&
+                {isAdmin &&
                     <ApproveLink/>
                 }
-                {user.level >=1 &&
+                {isLogged &&
                 <MessagesLink/>}                
 
             </Nav >

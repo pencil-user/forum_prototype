@@ -1,35 +1,33 @@
 import React from 'react'
-import {Modal, Button } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 import MainSpinner from '../Shared/MainSpinner.js'
-import {useGetUser} from '../../QueryHooks/users.js'
+import { useGetUser } from '../../QueryHooks/users.js'
 
-function ModalUserCard({show, handleClose, params=null})
-{
+function ModalUserCard({ show, handleClose, params = null }) {
     const id = params?.id
 
-    return <>       
+    return <>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>
                     User #{id}
                 </Modal.Title>
             </Modal.Header>
-            
-            {show && <Loader handleClose={handleClose} id={id}/>}
+
+            {show && <Loader handleClose={handleClose} id={id} />}
         </Modal>
 
-    </> 
+    </>
 }
 
-function Loader({handleClose, id})
-{
+function Loader({ handleClose, id }) {
     const { data, isLoading } = useGetUser(id);
 
     return <>
         <Modal.Body>
-            {isLoading && <MainSpinner/>}
-            {data && 
-                    <div>
+            {isLoading && <MainSpinner />}
+            {data &&
+                <div>
                     <div className="d-flex justify-content-between">
                         <h5>Username:</h5> <h5>{data.username}</h5>
                     </div>
@@ -41,7 +39,7 @@ function Loader({handleClose, id})
                     </div>
                     <div className="d-flex justify-content-between">
                         <h5>Number of posts:</h5> <h5>{data.posts}</h5>
-                    </div>                    
+                    </div>
                 </div>
             }
         </Modal.Body>
@@ -49,7 +47,7 @@ function Loader({handleClose, id})
             <Button variant="secondary" onClick={handleClose}>
                 Cancel
             </Button>
-        </Modal.Footer>    
+        </Modal.Footer>
     </>
 }
 

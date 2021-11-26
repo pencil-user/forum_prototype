@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import UserHighlight from '../Shared/UserHighlight.js'
-import {UserStore} from '../../UserService/UserService.js'
+import {useUser} from '../../UserService/UserService.js'
 
 import {
     useHistory,
@@ -24,7 +24,7 @@ function ShowThreadRow({thread, offset, limit})
 
     const [status, setStatus] = useState(false)
 
-    const User = UserStore.useState()
+    const {user, isLogged, isAdmin} = useUser()
 
     const history = useHistory()
 
@@ -74,7 +74,7 @@ function ShowThreadRow({thread, offset, limit})
                         <ShowThreadCell thread={thread} disabled={status}/>
                     </div>
                     <div>
-                        { (User.level >= 2) &&
+                        { isAdmin &&
                             <>
                                 <ButtonWithSpin 
                                     className="btn-primary ml-1 mr-1" 
@@ -94,7 +94,7 @@ function ShowThreadRow({thread, offset, limit})
                             </>
                         }
                         
-                        {(User.logged && (User.level >= 2 || User.id===thread.user_id)) && 
+                        {isLogged && (isAdmin || user.id===thread.user_id) && 
 
                             <>
                                 <ButtonWithSpin 

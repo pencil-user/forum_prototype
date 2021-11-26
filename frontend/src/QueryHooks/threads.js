@@ -1,131 +1,109 @@
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import {fetchWithJWT} from '../FetchService/FetchService.js'
+import { fetchWithJWT } from '../FetchService/FetchService.js'
 
-const REFETCH_INTERVAL = 60*1000
+const REFETCH_INTERVAL = 60 * 1000
 
-export function useGetSingleThread(id)
-{
-    const { data, error, isLoading, isError } = useQuery(["thread" , { id }], doGetSingleThread,  
-    {refetchInterval: REFETCH_INTERVAL} )
+export const useGetSingleThread = (id) =>
+    useQuery(
+        ["thread", { id }],
+        async ({ queryKey }) => {
+            const [_key, { id }] = queryKey;
+            let result = await fetchWithJWT.get('/api/threads/' + id)
 
-    async function doGetSingleThread({queryKey})
-    {
-        const [_key, { id }] = queryKey;
-        let result = await fetchWithJWT.get('/api/threads/' + id)
+            return result.data
+        },
+        { refetchInterval: REFETCH_INTERVAL }
+    )
 
-        return result.data
-    }
 
-    return { data, error, isLoading, isError }
-}
-
-export function useGetThreadPage(offset, limit)
-{
-
-    const { data, isLoading, isError } = useQuery(
-        ["threads", {limit:limit, offset:offset}], 
-        async ({queryKey})=>
-        {
+export const useGetThreadPage = (offset, limit) =>
+    useQuery(
+        ["threads", { limit: limit, offset: offset }],
+        async ({ queryKey }) => {
             const [_key, { offset, limit }] = queryKey;
 
-            let result = await fetchWithJWT.get('/api/threads/?offset='+offset+'&limit='+limit)
+            let result = await fetchWithJWT.get('/api/threads/?offset=' + offset + '&limit=' + limit)
 
             console.log("result", result)
-            return { total:+result.headers['-total'] , threads:result.data }
-        },  
-        {refetchInterval: REFETCH_INTERVAL});
+            return { total: +result.headers['-total'], threads: result.data }
+        },
+        { refetchInterval: REFETCH_INTERVAL })
 
-    return { data, isLoading, isError }
-
-}
-
-export function useCreateThread(id)
-{
+export function useCreateThread(id) {
     const queryClient = useQueryClient()
     const { mutateAsync, isLoading } = useMutation(
-        async ({...data})=>
-        {
+        async ({ ...data }) => {
             console.log('data for createThread', data)
             let result = await fetchWithJWT.post('/api/threads/', data)
-        
+
             return result.data
         }
     )
 
-    async function createThread({...data})
-    {
-        await mutateAsync({title: data.title, thread_body: data.thread_body, id})
+    async function createThread({ ...data }) {
+        await mutateAsync({ title: data.title, thread_body: data.thread_body, id })
         queryClient.invalidateQueries('threads')
     }
 
-    return {isLoading, createThread}    
+    return { isLoading, createThread }
 }
 
 
-export function useUpdateThread(id, offset=null, limit=null)
-{
+export function useUpdateThread(id, offset = null, limit = null) {
     const queryClient = useQueryClient()
     const { mutateAsync, isLoading } = useMutation(
-        async ({...data})=>
-        {
-            let result = await fetchWithJWT.patch('/api/threads/'+data.id, data.data)
+        async ({ ...data }) => {
+            let result = await fetchWithJWT.patch('/api/threads/' + data.id, data.data)
             return result.data
-        }       
+        }
     )
 
-    async function alterQuery(values)
-    {
-        let previousValues = queryClient.getQueryData(["threads", {limit:limit, offset:offset}]).threads
-        let currentValues = previousValues.map(x => x.id===id ? {...x, ...values} : x)
-        queryClient.setQueryData(["threads", {limit:limit, offset:offset}], {threads: currentValues})
+    async function alterQuery(values) {
+        let previousValues = queryClient.getQueryData(["threads", { limit: limit, offset: offset }]).threads
+        let currentValues = previousValues.map(x => x.id === id ? { ...x, ...values } : x)
+        queryClient.setQueryData(["threads", { limit: limit, offset: offset }], { threads: currentValues })
     }
 
-    async function lockThread(toggle)
-    {
-        await mutateAsync({id, data: { locked: toggle}})
+    async function lockThread(toggle) {
+        await mutateAsync({ id, data: { locked: toggle } })
         queryClient.invalidateQueries('threads')
-        if(offset !== null && limit !== null ) alterQuery({ locked: toggle})
+        if (offset !== null && limit !== null) alterQuery({ locked: toggle })
     }
 
-    async function pinThread(toggle)
-    {
-        await mutateAsync({id, data: { pinned: toggle}})
+    async function pinThread(toggle) {
+        await mutateAsync({ id, data: { pinned: toggle } })
         queryClient.invalidateQueries('threads')
-        if(offset !== null && limit !== null ) alterQuery({ locked: toggle})
+        if (offset !== null && limit !== null) alterQuery({ locked: toggle })
     }
 
-    async function updateThread(data)
-    {
-        await mutateAsync({id, data: {title: data.title, thread_body: data.thread_body}})
+    async function updateThread(data) {
+        await mutateAsync({ id, data: { title: data.title, thread_body: data.thread_body } })
         queryClient.invalidateQueries('threads')
         queryClient.invalidateQueries('thread')
 
-        if(offset !== null && limit !== null ) alterQuery(data)
+        if (offset !== null && limit !== null) alterQuery(data)
     }
 
-    return {isLoading, lockThread, pinThread, updateThread}
+    return { isLoading, lockThread, pinThread, updateThread }
 }
 
-export function useDeleteThread(id, offset, limit)
-{
+export function useDeleteThread(id, offset, limit) {
     const queryClient = useQueryClient()
     const { mutateAsync, isLoading } = useMutation(
-        async ({...data}) =>
-        {
-            let result = await fetchWithJWT.delete('/api/threads/'+data.id)
+        async ({ ...data }) => {
+            let result = await fetchWithJWT.delete('/api/threads/' + data.id)
             return result.data
         }
     )
 
-    async function deleteThread()
-    {
-        await mutateAsync({id:id})
+    async function deleteThread() {
+        await mutateAsync({ id: id })
         queryClient.invalidateQueries('threads')
-        let previousValues = queryClient.getQueryData(["threads", {limit:limit, offset:offset}]).threads
-        let currentValues = previousValues.filter(x => x.id!=id )
-        queryClient.setQueryData(["threads", {limit:limit, offset:offset}], {threads: currentValues})
+        let previousValues = queryClient.getQueryData(["threads", { limit: limit, offset: offset }]).threads
+        let currentValues = previousValues.filter(x => x.id != id)
+        queryClient.setQueryData(["threads", { limit: limit, offset: offset }], { threads: currentValues })
     }
 
-    return {isLoading, deleteThread}
+    return { isLoading, deleteThread }
 
 }
